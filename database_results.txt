@@ -1,0 +1,242 @@
+================================================================================
+DATABASE CONTENTS - EXPECTED RESULTS FOR TEST CHAINS
+================================================================================
+
+### TABLES IN CORE SCHEMA ###
+  - borrowers
+  - branches
+  - collections
+  - field_officers
+  - loan_documents
+  - loan_status_history
+  - loans
+  - repayments
+
+### RECORD COUNTS ###
+  borrowers: 1500 records
+  branches: 20 records
+  collections: 6000 records
+  field_officers: 240 records
+  loan_documents: 6000 records
+  loan_status_history: 9002 records
+  loans: 3000 records
+  repayments: 9000 records
+
+================================================================================
+CHAIN 1: LIMIT + filter + sort (latest loans)
+================================================================================
+
+Q1: Latest 5 loans with borrower name and branch name
+  LN_D1_0000633 | Kavitha Mishra | Branch 011 | active | 2025-12-30
+  LN_D1_0000389 | Swathi Khan | Branch 003 | active | 2025-12-29
+  LN_D1_0002832 | Gita Iyer | Branch 004 | active | 2025-12-29
+  LN_D1_0000553 | Gita Singh | Branch 011 | active | 2025-12-29
+  LN_D1_0000642 | Swathi Khan | Branch 014 | active | 2025-12-28
+
+Q2: Make it 15 (should return 15 loans)
+Q3: Only active loans (should return 0 active loans)
+
+Q4: Sort by highest outstanding balance (top 15 active loans by balance)
+
+================================================================================
+CHAIN 2: Pronouns (those borrowers)
+================================================================================
+
+Q1: List 5 borrowers who have loans
+  BOR_D1_000001 | Prakash Patel
+  BOR_D1_000002 | Rajesh Khan
+  BOR_D1_000003 | Sunita Singh
+  BOR_D1_000004 | Rajesh Das
+  BOR_D1_000005 | Sandhya Das
+
+Q2: For THOSE borrowers, show their loans
+  LN_D1_0000001 | Prakash Patel | Balance: 47914.64
+  LN_D1_0001501 | Prakash Patel | Balance: 31534.97
+  LN_D1_0000002 | Rajesh Khan | Balance: 10595.84
+  LN_D1_0001502 | Rajesh Khan | Balance: 25525.65
+  LN_D1_0000003 | Sunita Singh | Balance: 18703.80
+  LN_D1_0001503 | Sunita Singh | Balance: 36016.22
+  LN_D1_0000004 | Rajesh Das | Balance: 25664.79
+  LN_D1_0001504 | Rajesh Das | Balance: 39222.23
+  LN_D1_0000005 | Sandhya Das | Balance: 4579.72
+  LN_D1_0001505 | Sandhya Das | Balance: 18635.91
+
+Q3: Which branches are THOSE loans from?
+  BRN_D1_001 | Branch 001
+  BRN_D1_007 | Branch 007
+  BRN_D1_008 | Branch 008
+  BRN_D1_014 | Branch 014
+  BRN_D1_015 | Branch 015
+
+================================================================================
+CHAIN 3: Keep grouping dimension (collections by branch)
+================================================================================
+
+Q1: Total collections by branch (last 30 days from 2025-12-08)
+  BRN_D1_008 | Branch 008 | $232456.92 | 47 collections
+  BRN_D1_012 | Branch 012 | $202399.29 | 40 collections
+  BRN_D1_015 | Branch 015 | $202324.52 | 49 collections
+  BRN_D1_017 | Branch 017 | $182105.79 | 45 collections
+  BRN_D1_018 | Branch 018 | $176553.11 | 52 collections
+  BRN_D1_013 | Branch 013 | $174973.52 | 45 collections
+  BRN_D1_019 | Branch 019 | $172130.07 | 37 collections
+  BRN_D1_010 | Branch 010 | $162203.89 | 45 collections
+  BRN_D1_005 | Branch 005 | $161861.37 | 47 collections
+  BRN_D1_016 | Branch 016 | $150213.99 | 43 collections
+  BRN_D1_003 | Branch 003 | $139810.19 | 38 collections
+  BRN_D1_002 | Branch 002 | $135613.05 | 40 collections
+  BRN_D1_006 | Branch 006 | $134664.24 | 36 collections
+  BRN_D1_001 | Branch 001 | $132504.24 | 36 collections
+  BRN_D1_014 | Branch 014 | $128637.91 | 34 collections
+  BRN_D1_009 | Branch 009 | $125444.21 | 37 collections
+  BRN_D1_011 | Branch 011 | $124516.99 | 31 collections
+  BRN_D1_007 | Branch 007 | $123696.45 | 38 collections
+  BRN_D1_004 | Branch 004 | $92830.95 | 36 collections
+  BRN_D1_020 | Branch 020 | $85944.20 | 26 collections
+
+Q3: Top 3 branches (same data, LIMIT 3)
+  1. Branch 008 | $232456.92 | 47 collections
+  2. Branch 012 | $202399.29 | 40 collections
+  3. Branch 015 | $202324.52 | 49 collections
+
+================================================================================
+CHAIN 4: Metric swap (keep branch grouping)
+================================================================================
+
+Q1: Total collections by branch (all time)
+  Branch 008: $1313761.32
+  Branch 017: $1312287.63
+  Branch 012: $1274583.56
+  Branch 006: $1252134.05
+  Branch 019: $1223988.97
+  Branch 013: $1214219.42
+  Branch 020: $1209781.57
+  Branch 009: $1172259.00
+  Branch 010: $1159477.72
+  Branch 004: $1156764.11
+  Branch 015: $1142734.06
+  Branch 014: $1124317.01
+  Branch 016: $1121818.70
+  Branch 002: $1114120.07
+  Branch 005: $1111447.22
+  Branch 003: $1103800.51
+  Branch 001: $1085540.72
+  Branch 007: $1071307.04
+  Branch 011: $1057359.02
+  Branch 018: $1052600.23
+
+Q2: Switch to total outstanding balance by branch
+  Branch 017: $4511717.07
+  Branch 012: $4502339.14
+  Branch 004: $4461900.41
+  Branch 013: $4445698.45
+  Branch 008: $4416469.40
+  Branch 015: $4413192.43
+  Branch 020: $4362401.44
+  Branch 009: $4344592.08
+  Branch 006: $4292716.53
+  Branch 019: $4264668.80
+  Branch 003: $4221626.44
+  Branch 010: $4183146.41
+  Branch 011: $4133631.55
+  Branch 014: $4107323.80
+  Branch 007: $4101652.12
+  Branch 005: $4064520.72
+  Branch 002: $4016030.59
+  Branch 001: $4009359.66
+  Branch 016: $3983203.72
+  Branch 018: $3538416.05
+
+Q3: Only active loans
+
+================================================================================
+CHAIN 5: Time window follow-up
+================================================================================
+
+Note: Need to check if repayments table exists
+Q1: Total repayments by branch (last month)
+
+================================================================================
+CHAIN 6: Collections + field officers continuity
+================================================================================
+
+Q1: Latest 10 collections with field officer name and branch name
+  2026-02-06 | $3561.38 | Ravi Kulkarni | Branch 015
+  2026-02-05 | $5734.30 | Vikram Menon | Branch 004
+  2026-02-05 | $1152.22 | Arjun Kulkarni | Branch 014
+  2026-02-05 | $6980.52 | Kavya Gupta | Branch 011
+  2026-02-05 | $3825.33 | Isha Jain | Branch 011
+  2026-02-04 | $261.42 | Manoj Iyer | Branch 018
+  2026-02-04 | $411.51 | Kavya Menon | Branch 007
+  2026-02-04 | $6250.50 | Nikhil Mishra | Branch 003
+  2026-02-03 | $1441.49 | Amit Gupta | Branch 003
+  2026-02-03 | $1384.17 | Varun Patel | Branch 005
+
+Q2: Only for branch with code 'BR001' or similar
+  First branch: BRN_D1_001 - Branch 001
+  Collections count: 300
+
+================================================================================
+CHAIN 7: Loan documents context
+================================================================================
+
+Q1: 10 loans that have documents with loan number
+  LN_D1_0000001 (2 documents)
+  LN_D1_0000002 (2 documents)
+  LN_D1_0000003 (2 documents)
+  LN_D1_0000004 (2 documents)
+  LN_D1_0000005 (2 documents)
+  LN_D1_0000006 (2 documents)
+  LN_D1_0000007 (2 documents)
+  LN_D1_0000008 (2 documents)
+  LN_D1_0000009 (2 documents)
+  LN_D1_0000010 (2 documents)
+
+Q2: For THOSE loans, show document details
+  LN_D1_0000001 | ID_PROOF | Status: VERIFIED
+  LN_D1_0000001 | SIGNED_AGREEMENT | Status: VERIFIED
+  LN_D1_0000002 | ID_PROOF | Status: VERIFIED
+  LN_D1_0000002 | SIGNED_AGREEMENT | Status: VERIFIED
+  LN_D1_0000003 | ID_PROOF | Status: VERIFIED
+  LN_D1_0000003 | SIGNED_AGREEMENT | Status: VERIFIED
+  LN_D1_0000004 | ID_PROOF | Status: VERIFIED
+  LN_D1_0000004 | SIGNED_AGREEMENT | Status: VERIFIED
+  LN_D1_0000005 | ID_PROOF | Status: VERIFIED
+  LN_D1_0000005 | SIGNED_AGREEMENT | Status: VERIFIED
+  LN_D1_0000006 | ID_PROOF | Status: VERIFIED
+  LN_D1_0000006 | SIGNED_AGREEMENT | Status: VERIFIED
+  LN_D1_0000007 | ID_PROOF | Status: VERIFIED
+  LN_D1_0000007 | SIGNED_AGREEMENT | Status: VERIFIED
+  LN_D1_0000008 | ID_PROOF | Status: VERIFIED
+
+Q3: Only documents NOT VERIFIED
+  Expected count: 0 unverified documents
+
+================================================================================
+CHAIN 8: Context reset test
+================================================================================
+
+Q1: Total collections by branch
+  (Already shown above)
+
+Q2: Most recently created borrowers (should NOT filter by branch)
+  BOR_D1_000002 | Rajesh Khan | 2025-12-31 14:21:04.855221
+  BOR_D1_000003 | Sunita Singh | 2025-12-31 14:21:04.855221
+  BOR_D1_000004 | Rajesh Das | 2025-12-31 14:21:04.855221
+  BOR_D1_000005 | Sandhya Das | 2025-12-31 14:21:04.855221
+  BOR_D1_000006 | Prakash Roy | 2025-12-31 14:21:04.855221
+  BOR_D1_000007 | Rajesh Reddy | 2025-12-31 14:21:04.855221
+  BOR_D1_000008 | Deepak Das | 2025-12-31 14:21:04.855221
+  BOR_D1_000009 | Deepak Menon | 2025-12-31 14:21:04.855221
+  BOR_D1_000010 | Ramesh Roy | 2025-12-31 14:21:04.855221
+  BOR_D1_000001 | Prakash Patel | 2025-12-31 14:21:04.855221
+
+================================================================================
+SUMMARY
+================================================================================
+
+        Total Loans: 3000
+        Total Borrowers: 1500
+        Total Branches: 20
+        Total Collections: 6000
+        

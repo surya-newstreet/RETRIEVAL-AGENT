@@ -1,0 +1,164 @@
+{
+  "tables": [
+    {
+      "table_name": "__kb_refresh_test",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "__kb_refresh_test",
+        "__kb_refresh_tests",
+        "  kb refresh test"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    },
+    {
+      "table_name": "borrowers",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "borrowers",
+        "borrower"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    },
+    {
+      "table_name": "branches",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "branches",
+        "branch"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    },
+    {
+      "table_name": "collections",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "collections",
+        "collection"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    },
+    {
+      "table_name": "field_officers",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "field_officers",
+        "field_officer",
+        "field officers"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    },
+    {
+      "table_name": "loan_documents",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "loan_documents",
+        "loan_document",
+        "loan documents"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    },
+    {
+      "table_name": "loan_status_history",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "loan_status_history",
+        "loan_status_histories",
+        "loan status history"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    },
+    {
+      "table_name": "loans",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "loans",
+        "loan"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    },
+    {
+      "table_name": "repayments",
+      "purpose": "unknown, needs enrichment",
+      "aliases": [
+        "repayments",
+        "repayment"
+      ],
+      "pii_columns": [],
+      "default_filters": [],
+      "recommended_dimensions": [],
+      "recommended_metrics": [],
+      "join_policies": {
+        "max_depth": 4,
+        "blocked_paths": []
+      },
+      "business_rules": []
+    }
+  ],
+  "metadata": {
+    "table_count": 9
+  }
+}

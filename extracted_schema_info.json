@@ -1,0 +1,242 @@
+{
+    "schema_name": "core",
+    "tables": {
+        "core.borrowers": {
+            "foreign_keys": []
+        },
+        "core.branches": {
+            "foreign_keys": []
+        },
+        "core.collections": {
+            "foreign_keys": [
+                {
+                    "column_name": "loan_id",
+                    "referenced_table_name": "loans",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                },
+                {
+                    "column_name": "field_officer_id",
+                    "referenced_table_name": "field_officers",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                }
+            ]
+        },
+        "core.field_officers": {
+            "foreign_keys": [
+                {
+                    "column_name": "branch_id",
+                    "referenced_table_name": "branches",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                }
+            ]
+        },
+        "core.loan_documents": {
+            "foreign_keys": [
+                {
+                    "column_name": "loan_id",
+                    "referenced_table_name": "loans",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                },
+                {
+                    "column_name": "verified_by_field_officer_id",
+                    "referenced_table_name": "field_officers",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                }
+            ]
+        },
+        "core.loan_status_history": {
+            "foreign_keys": [
+                {
+                    "column_name": "changed_by_officer_id",
+                    "referenced_table_name": "field_officers",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                },
+                {
+                    "column_name": "loan_id",
+                    "referenced_table_name": "loans",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                }
+            ]
+        },
+        "core.loans": {
+            "foreign_keys": [
+                {
+                    "column_name": "borrower_id",
+                    "referenced_table_name": "borrowers",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                },
+                {
+                    "column_name": "branch_id",
+                    "referenced_table_name": "branches",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                }
+            ]
+        },
+        "core.repayments": {
+            "foreign_keys": [
+                {
+                    "column_name": "loan_id",
+                    "referenced_table_name": "loans",
+                    "referenced_column_name": "id",
+                    "referenced_schema": "core"
+                }
+            ]
+        }
+    },
+    "fk_edges": [
+        {
+            "from_table": "core.collections",
+            "from_column": "loan_id",
+            "to_table": "core.loans",
+            "to_column": "id",
+            "constraint_name": "collections_loan_id_fkey"
+        },
+        {
+            "from_table": "core.collections",
+            "from_column": "field_officer_id",
+            "to_table": "core.field_officers",
+            "to_column": "id",
+            "constraint_name": "collections_field_officer_id_fkey"
+        },
+        {
+            "from_table": "core.field_officers",
+            "from_column": "branch_id",
+            "to_table": "core.branches",
+            "to_column": "id",
+            "constraint_name": "field_officers_branch_id_fkey"
+        },
+        {
+            "from_table": "core.loan_documents",
+            "from_column": "loan_id",
+            "to_table": "core.loans",
+            "to_column": "id",
+            "constraint_name": "loan_documents_loan_id_fkey"
+        },
+        {
+            "from_table": "core.loan_documents",
+            "from_column": "verified_by_field_officer_id",
+            "to_table": "core.field_officers",
+            "to_column": "id",
+            "constraint_name": "loan_documents_verified_by_field_officer_id_fkey"
+        }
+    ],
+    "join_paths": {
+        "total_count": 56,
+        "key_format": "string (A->B)",
+        "sample_entries": {
+            "core.borrowers->core.loans": {
+                "from_table": "core.borrowers",
+                "to_table": "core.loans",
+                "path": [
+                    "core.borrowers",
+                    "core.loans"
+                ],
+                "edges": [
+                    {
+                        "from": "core.borrowers",
+                        "to": "core.loans",
+                        "column": "unknown"
+                    }
+                ],
+                "depth": 1
+            },
+            "core.borrowers->core.collections": {
+                "from_table": "core.borrowers",
+                "to_table": "core.collections",
+                "path": [
+                    "core.borrowers",
+                    "core.loans",
+                    "core.collections"
+                ],
+                "edges": [
+                    {
+                        "from": "core.borrowers",
+                        "to": "core.loans",
+                        "column": "unknown"
+                    },
+                    {
+                        "from": "core.loans",
+                        "to": "core.collections",
+                        "column": "unknown"
+                    }
+                ],
+                "depth": 2
+            },
+            "core.borrowers->core.loan_documents": {
+                "from_table": "core.borrowers",
+                "to_table": "core.loan_documents",
+                "path": [
+                    "core.borrowers",
+                    "core.loans",
+                    "core.loan_documents"
+                ],
+                "edges": [
+                    {
+                        "from": "core.borrowers",
+                        "to": "core.loans",
+                        "column": "unknown"
+                    },
+                    {
+                        "from": "core.loans",
+                        "to": "core.loan_documents",
+                        "column": "unknown"
+                    }
+                ],
+                "depth": 2
+            },
+            "core.borrowers->core.loan_status_history": {
+                "from_table": "core.borrowers",
+                "to_table": "core.loan_status_history",
+                "path": [
+                    "core.borrowers",
+                    "core.loans",
+                    "core.loan_status_history"
+                ],
+                "edges": [
+                    {
+                        "from": "core.borrowers",
+                        "to": "core.loans",
+                        "column": "unknown"
+                    },
+                    {
+                        "from": "core.loans",
+                        "to": "core.loan_status_history",
+                        "column": "unknown"
+                    }
+                ],
+                "depth": 2
+            },
+            "core.borrowers->core.branches": {
+                "from_table": "core.borrowers",
+                "to_table": "core.branches",
+                "path": [
+                    "core.borrowers",
+                    "core.loans",
+                    "core.branches"
+                ],
+                "edges": [
+                    {
+                        "from": "core.borrowers",
+                        "to": "core.loans",
+                        "column": "unknown"
+                    },
+                    {
+                        "from": "core.loans",
+                        "to": "core.branches",
+                        "column": "unknown"
+                    }
+                ],
+                "depth": 2
+            }
+        }
+    }
+}

@@ -1,0 +1,2988 @@
+{
+  "version": "2026-01-08T06:03:10.231959",
+  "schema_name": "core",
+  "tables": {
+    "core.__kb_refresh_test": {
+      "schema": "core",
+      "table": "__kb_refresh_test",
+      "schema_qualified_name": "core.__kb_refresh_test",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "index_name": "__kb_refresh_test_pkey",
+          "table_name": "__kb_refresh_test",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "__kb_refresh_test_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        }
+      ],
+      "domain": "general",
+      "date_columns": [],
+      "status_columns": [],
+      "natural_key_candidates": [],
+      "semantic": {
+        "table_name": "__kb_refresh_test",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "__kb_refresh_test",
+          "__kb_refresh_tests",
+          "  kb refresh test"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    },
+    "core.borrowers": {
+      "schema": "core",
+      "table": "borrowers",
+      "schema_qualified_name": "core.borrowers",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": "nextval('core.borrowers_id_seq'::regclass)",
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "borrower_code",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 20,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "full_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 100,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "phone",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": 15,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "address",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": 250,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": false,
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "index_name": "borrowers_borrower_code_key",
+          "table_name": "borrowers",
+          "columns": [
+            "borrower_code"
+          ],
+          "is_unique": true,
+          "is_primary": false
+        },
+        {
+          "index_name": "borrowers_pkey",
+          "table_name": "borrowers",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "borrowers_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        },
+        {
+          "constraint_name": "borrowers_borrower_code_not_null",
+          "check_clause": "borrower_code IS NOT NULL"
+        },
+        {
+          "constraint_name": "borrowers_full_name_not_null",
+          "check_clause": "full_name IS NOT NULL"
+        },
+        {
+          "constraint_name": "borrowers_created_at_not_null",
+          "check_clause": "created_at IS NOT NULL"
+        }
+      ],
+      "domain": "microfinance",
+      "date_columns": [
+        "created_at"
+      ],
+      "status_columns": [],
+      "natural_key_candidates": [
+        "borrower_code",
+        "full_name"
+      ],
+      "semantic": {
+        "table_name": "borrowers",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "borrowers",
+          "borrower"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    },
+    "core.branches": {
+      "schema": "core",
+      "table": "branches",
+      "schema_qualified_name": "core.branches",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": "nextval('core.branches_id_seq'::regclass)",
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "branch_code",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 20,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "branch_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 100,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "location",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": 200,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "is_active",
+          "data_type": "boolean",
+          "is_nullable": false,
+          "column_default": "true",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": false,
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "index_name": "branches_branch_code_key",
+          "table_name": "branches",
+          "columns": [
+            "branch_code"
+          ],
+          "is_unique": true,
+          "is_primary": false
+        },
+        {
+          "index_name": "branches_pkey",
+          "table_name": "branches",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "branches_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        },
+        {
+          "constraint_name": "branches_branch_code_not_null",
+          "check_clause": "branch_code IS NOT NULL"
+        },
+        {
+          "constraint_name": "branches_branch_name_not_null",
+          "check_clause": "branch_name IS NOT NULL"
+        },
+        {
+          "constraint_name": "branches_is_active_not_null",
+          "check_clause": "is_active IS NOT NULL"
+        },
+        {
+          "constraint_name": "branches_created_at_not_null",
+          "check_clause": "created_at IS NOT NULL"
+        }
+      ],
+      "domain": "microfinance",
+      "date_columns": [
+        "created_at"
+      ],
+      "status_columns": [],
+      "natural_key_candidates": [
+        "branch_code",
+        "branch_name"
+      ],
+      "semantic": {
+        "table_name": "branches",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "branches",
+          "branch"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    },
+    "core.collections": {
+      "schema": "core",
+      "table": "collections",
+      "schema_qualified_name": "core.collections",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": "nextval('core.collections_id_seq'::regclass)",
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "loan_id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 2,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "field_officer_id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 3,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "amount_collected",
+          "data_type": "numeric",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 10,
+          "numeric_scale": 2,
+          "ordinal_position": 4,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "collection_date",
+          "data_type": "date",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "remarks",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": 250,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": false,
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "constraint_name": "collections_loan_id_fkey",
+          "table_name": "collections",
+          "column_name": "loan_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "loans",
+          "referenced_column_name": "id"
+        },
+        {
+          "constraint_name": "collections_field_officer_id_fkey",
+          "table_name": "collections",
+          "column_name": "field_officer_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "field_officers",
+          "referenced_column_name": "id"
+        }
+      ],
+      "indexes": [
+        {
+          "index_name": "collections_pkey",
+          "table_name": "collections",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        },
+        {
+          "index_name": "idx_collections_collection_date",
+          "table_name": "collections",
+          "columns": [
+            "collection_date"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "idx_collections_loan_officer",
+          "table_name": "collections",
+          "columns": [
+            "loan_id",
+            "field_officer_id"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "collections_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        },
+        {
+          "constraint_name": "collections_loan_id_not_null",
+          "check_clause": "loan_id IS NOT NULL"
+        },
+        {
+          "constraint_name": "collections_field_officer_id_not_null",
+          "check_clause": "field_officer_id IS NOT NULL"
+        },
+        {
+          "constraint_name": "collections_amount_collected_not_null",
+          "check_clause": "amount_collected IS NOT NULL"
+        },
+        {
+          "constraint_name": "collections_collection_date_not_null",
+          "check_clause": "collection_date IS NOT NULL"
+        },
+        {
+          "constraint_name": "collections_created_at_not_null",
+          "check_clause": "created_at IS NOT NULL"
+        }
+      ],
+      "domain": "microfinance",
+      "date_columns": [
+        "collection_date",
+        "created_at"
+      ],
+      "status_columns": [],
+      "natural_key_candidates": [],
+      "semantic": {
+        "table_name": "collections",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "collections",
+          "collection"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    },
+    "core.field_officers": {
+      "schema": "core",
+      "table": "field_officers",
+      "schema_qualified_name": "core.field_officers",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": "nextval('core.field_officers_id_seq'::regclass)",
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "branch_id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 2,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "officer_code",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 20,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "full_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 100,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "phone",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": 15,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "is_active",
+          "data_type": "boolean",
+          "is_nullable": false,
+          "column_default": "true",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": false,
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "constraint_name": "field_officers_branch_id_fkey",
+          "table_name": "field_officers",
+          "column_name": "branch_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "branches",
+          "referenced_column_name": "id"
+        }
+      ],
+      "indexes": [
+        {
+          "index_name": "field_officers_officer_code_key",
+          "table_name": "field_officers",
+          "columns": [
+            "officer_code"
+          ],
+          "is_unique": true,
+          "is_primary": false
+        },
+        {
+          "index_name": "field_officers_pkey",
+          "table_name": "field_officers",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "field_officers_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        },
+        {
+          "constraint_name": "field_officers_branch_id_not_null",
+          "check_clause": "branch_id IS NOT NULL"
+        },
+        {
+          "constraint_name": "field_officers_officer_code_not_null",
+          "check_clause": "officer_code IS NOT NULL"
+        },
+        {
+          "constraint_name": "field_officers_full_name_not_null",
+          "check_clause": "full_name IS NOT NULL"
+        },
+        {
+          "constraint_name": "field_officers_is_active_not_null",
+          "check_clause": "is_active IS NOT NULL"
+        },
+        {
+          "constraint_name": "field_officers_created_at_not_null",
+          "check_clause": "created_at IS NOT NULL"
+        }
+      ],
+      "domain": "microfinance",
+      "date_columns": [
+        "created_at"
+      ],
+      "status_columns": [],
+      "natural_key_candidates": [
+        "officer_code",
+        "full_name"
+      ],
+      "semantic": {
+        "table_name": "field_officers",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "field_officers",
+          "field_officer",
+          "field officers"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    },
+    "core.loan_documents": {
+      "schema": "core",
+      "table": "loan_documents",
+      "schema_qualified_name": "core.loan_documents",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": "nextval('core.loan_documents_id_seq'::regclass)",
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "loan_id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 2,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "document_type",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 50,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "document_reference",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 300,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "verification_status",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": "'PENDING'::character varying",
+          "character_maximum_length": 20,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "verified_by_field_officer_id",
+          "data_type": "bigint",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 6,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "verified_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": false,
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "constraint_name": "loan_documents_loan_id_fkey",
+          "table_name": "loan_documents",
+          "column_name": "loan_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "loans",
+          "referenced_column_name": "id"
+        },
+        {
+          "constraint_name": "loan_documents_verified_by_field_officer_id_fkey",
+          "table_name": "loan_documents",
+          "column_name": "verified_by_field_officer_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "field_officers",
+          "referenced_column_name": "id"
+        }
+      ],
+      "indexes": [
+        {
+          "index_name": "idx_loan_documents_loan_id",
+          "table_name": "loan_documents",
+          "columns": [
+            "loan_id"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "idx_loan_documents_verified_by",
+          "table_name": "loan_documents",
+          "columns": [
+            "verified_by_field_officer_id"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "loan_documents_pkey",
+          "table_name": "loan_documents",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        },
+        {
+          "index_name": "uq_loan_documents_loan_doctype",
+          "table_name": "loan_documents",
+          "columns": [
+            "loan_id",
+            "document_type"
+          ],
+          "is_unique": true,
+          "is_primary": false
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "loan_documents_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_documents_loan_id_not_null",
+          "check_clause": "loan_id IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_documents_document_type_not_null",
+          "check_clause": "document_type IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_documents_document_reference_not_null",
+          "check_clause": "document_reference IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_documents_verification_status_not_null",
+          "check_clause": "verification_status IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_documents_created_at_not_null",
+          "check_clause": "created_at IS NOT NULL"
+        }
+      ],
+      "domain": "microfinance",
+      "date_columns": [
+        "verified_at",
+        "created_at"
+      ],
+      "status_columns": [
+        "document_type",
+        "verification_status"
+      ],
+      "natural_key_candidates": [],
+      "semantic": {
+        "table_name": "loan_documents",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "loan_documents",
+          "loan_document",
+          "loan documents"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    },
+    "core.loan_status_history": {
+      "schema": "core",
+      "table": "loan_status_history",
+      "schema_qualified_name": "core.loan_status_history",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": "nextval('core.loan_status_history_id_seq'::regclass)",
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "loan_id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 2,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "old_status",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 40,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "new_status",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 40,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "changed_by_type",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": "'SYSTEM'::character varying",
+          "character_maximum_length": 30,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "changed_by_officer_id",
+          "data_type": "bigint",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 6,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "changed_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": false,
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "reason",
+          "data_type": "text",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "constraint_name": "loan_status_history_changed_by_officer_id_fkey",
+          "table_name": "loan_status_history",
+          "column_name": "changed_by_officer_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "field_officers",
+          "referenced_column_name": "id"
+        },
+        {
+          "constraint_name": "loan_status_history_loan_id_fkey",
+          "table_name": "loan_status_history",
+          "column_name": "loan_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "loans",
+          "referenced_column_name": "id"
+        }
+      ],
+      "indexes": [
+        {
+          "index_name": "idx_loan_status_history_changed_by",
+          "table_name": "loan_status_history",
+          "columns": [
+            "changed_by_officer_id"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "idx_loan_status_history_loan_id",
+          "table_name": "loan_status_history",
+          "columns": [
+            "loan_id"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "loan_status_history_pkey",
+          "table_name": "loan_status_history",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "loan_status_history_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_status_history_loan_id_not_null",
+          "check_clause": "loan_id IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_status_history_old_status_not_null",
+          "check_clause": "old_status IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_status_history_new_status_not_null",
+          "check_clause": "new_status IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_status_history_changed_by_type_not_null",
+          "check_clause": "changed_by_type IS NOT NULL"
+        },
+        {
+          "constraint_name": "loan_status_history_changed_at_not_null",
+          "check_clause": "changed_at IS NOT NULL"
+        }
+      ],
+      "domain": "microfinance",
+      "date_columns": [
+        "changed_at"
+      ],
+      "status_columns": [
+        "old_status",
+        "new_status",
+        "changed_by_type"
+      ],
+      "natural_key_candidates": [],
+      "semantic": {
+        "table_name": "loan_status_history",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "loan_status_history",
+          "loan_status_histories",
+          "loan status history"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    },
+    "core.loans": {
+      "schema": "core",
+      "table": "loans",
+      "schema_qualified_name": "core.loans",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": "nextval('core.loans_id_seq'::regclass)",
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "borrower_id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 2,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "branch_id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 3,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "loan_number",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 30,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "principal_amount",
+          "data_type": "numeric",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 12,
+          "numeric_scale": 2,
+          "ordinal_position": 5,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "outstanding_balance",
+          "data_type": "numeric",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 12,
+          "numeric_scale": 2,
+          "ordinal_position": 6,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "status",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": "'active'::character varying",
+          "character_maximum_length": 20,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "disbursement_date",
+          "data_type": "date",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": false,
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 9,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "constraint_name": "loans_borrower_id_fkey",
+          "table_name": "loans",
+          "column_name": "borrower_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "borrowers",
+          "referenced_column_name": "id"
+        },
+        {
+          "constraint_name": "loans_branch_id_fkey",
+          "table_name": "loans",
+          "column_name": "branch_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "branches",
+          "referenced_column_name": "id"
+        }
+      ],
+      "indexes": [
+        {
+          "index_name": "idx_loans_borrower_branch",
+          "table_name": "loans",
+          "columns": [
+            "borrower_id",
+            "branch_id"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "idx_loans_status",
+          "table_name": "loans",
+          "columns": [
+            "status"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "loans_loan_number_key",
+          "table_name": "loans",
+          "columns": [
+            "loan_number"
+          ],
+          "is_unique": true,
+          "is_primary": false
+        },
+        {
+          "index_name": "loans_pkey",
+          "table_name": "loans",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "loans_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        },
+        {
+          "constraint_name": "loans_borrower_id_not_null",
+          "check_clause": "borrower_id IS NOT NULL"
+        },
+        {
+          "constraint_name": "loans_branch_id_not_null",
+          "check_clause": "branch_id IS NOT NULL"
+        },
+        {
+          "constraint_name": "loans_loan_number_not_null",
+          "check_clause": "loan_number IS NOT NULL"
+        },
+        {
+          "constraint_name": "loans_principal_amount_not_null",
+          "check_clause": "principal_amount IS NOT NULL"
+        },
+        {
+          "constraint_name": "loans_outstanding_balance_not_null",
+          "check_clause": "outstanding_balance IS NOT NULL"
+        },
+        {
+          "constraint_name": "loans_status_not_null",
+          "check_clause": "status IS NOT NULL"
+        },
+        {
+          "constraint_name": "loans_disbursement_date_not_null",
+          "check_clause": "disbursement_date IS NOT NULL"
+        },
+        {
+          "constraint_name": "loans_created_at_not_null",
+          "check_clause": "created_at IS NOT NULL"
+        }
+      ],
+      "domain": "microfinance",
+      "date_columns": [
+        "disbursement_date",
+        "created_at"
+      ],
+      "status_columns": [
+        "status"
+      ],
+      "natural_key_candidates": [
+        "loan_number"
+      ],
+      "semantic": {
+        "table_name": "loans",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "loans",
+          "loan"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    },
+    "core.repayments": {
+      "schema": "core",
+      "table": "repayments",
+      "schema_qualified_name": "core.repayments",
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": "nextval('core.repayments_id_seq'::regclass)",
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "loan_id",
+          "data_type": "bigint",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 2,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "amount",
+          "data_type": "numeric",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 10,
+          "numeric_scale": 2,
+          "ordinal_position": 3,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "payment_date",
+          "data_type": "date",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "payment_mode",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "column_default": null,
+          "character_maximum_length": 20,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "reference_number",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "column_default": null,
+          "character_maximum_length": 50,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "enum_values": null,
+          "check_constraint_values": null
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp without time zone",
+          "is_nullable": false,
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "enum_values": null,
+          "check_constraint_values": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "constraint_name": "repayments_loan_id_fkey",
+          "table_name": "repayments",
+          "column_name": "loan_id",
+          "referenced_schema": "core",
+          "referenced_table_name": "loans",
+          "referenced_column_name": "id"
+        }
+      ],
+      "indexes": [
+        {
+          "index_name": "idx_repayments_loan_id",
+          "table_name": "repayments",
+          "columns": [
+            "loan_id"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "idx_repayments_payment_date",
+          "table_name": "repayments",
+          "columns": [
+            "payment_date"
+          ],
+          "is_unique": false,
+          "is_primary": false
+        },
+        {
+          "index_name": "repayments_pkey",
+          "table_name": "repayments",
+          "columns": [
+            "id"
+          ],
+          "is_unique": true,
+          "is_primary": true
+        }
+      ],
+      "check_constraints": [
+        {
+          "constraint_name": "repayments_id_not_null",
+          "check_clause": "id IS NOT NULL"
+        },
+        {
+          "constraint_name": "repayments_loan_id_not_null",
+          "check_clause": "loan_id IS NOT NULL"
+        },
+        {
+          "constraint_name": "repayments_amount_not_null",
+          "check_clause": "amount IS NOT NULL"
+        },
+        {
+          "constraint_name": "repayments_payment_date_not_null",
+          "check_clause": "payment_date IS NOT NULL"
+        },
+        {
+          "constraint_name": "repayments_payment_mode_not_null",
+          "check_clause": "payment_mode IS NOT NULL"
+        },
+        {
+          "constraint_name": "repayments_created_at_not_null",
+          "check_clause": "created_at IS NOT NULL"
+        }
+      ],
+      "domain": "microfinance",
+      "date_columns": [
+        "payment_date",
+        "created_at"
+      ],
+      "status_columns": [],
+      "natural_key_candidates": [
+        "reference_number"
+      ],
+      "semantic": {
+        "table_name": "repayments",
+        "purpose": "unknown, needs enrichment",
+        "aliases": [
+          "repayments",
+          "repayment"
+        ],
+        "pii_columns": [],
+        "default_filters": [],
+        "recommended_dimensions": [],
+        "recommended_metrics": [],
+        "join_policies": {
+          "max_depth": 4,
+          "blocked_paths": []
+        },
+        "business_rules": []
+      }
+    }
+  },
+  "join_graph": {
+    "nodes": [
+      "core.__kb_refresh_test",
+      "core.borrowers",
+      "core.branches",
+      "core.collections",
+      "core.field_officers",
+      "core.loan_documents",
+      "core.loan_status_history",
+      "core.loans",
+      "core.repayments"
+    ],
+    "edges": [
+      {
+        "from": "core.borrowers",
+        "to": "core.loans",
+        "from_column": "id",
+        "to_column": "borrower_id",
+        "constraint_name": "loans_borrower_id_fkey"
+      },
+      {
+        "from": "core.branches",
+        "to": "core.field_officers",
+        "from_column": "id",
+        "to_column": "branch_id",
+        "constraint_name": "field_officers_branch_id_fkey"
+      },
+      {
+        "from": "core.branches",
+        "to": "core.loans",
+        "from_column": "id",
+        "to_column": "branch_id",
+        "constraint_name": "loans_branch_id_fkey"
+      },
+      {
+        "from": "core.collections",
+        "to": "core.loans",
+        "from_column": "loan_id",
+        "to_column": "id",
+        "constraint_name": "collections_loan_id_fkey"
+      },
+      {
+        "from": "core.collections",
+        "to": "core.field_officers",
+        "from_column": "field_officer_id",
+        "to_column": "id",
+        "constraint_name": "collections_field_officer_id_fkey"
+      },
+      {
+        "from": "core.field_officers",
+        "to": "core.collections",
+        "from_column": "id",
+        "to_column": "field_officer_id",
+        "constraint_name": "collections_field_officer_id_fkey"
+      },
+      {
+        "from": "core.field_officers",
+        "to": "core.branches",
+        "from_column": "branch_id",
+        "to_column": "id",
+        "constraint_name": "field_officers_branch_id_fkey"
+      },
+      {
+        "from": "core.field_officers",
+        "to": "core.loan_documents",
+        "from_column": "id",
+        "to_column": "verified_by_field_officer_id",
+        "constraint_name": "loan_documents_verified_by_field_officer_id_fkey"
+      },
+      {
+        "from": "core.field_officers",
+        "to": "core.loan_status_history",
+        "from_column": "id",
+        "to_column": "changed_by_officer_id",
+        "constraint_name": "loan_status_history_changed_by_officer_id_fkey"
+      },
+      {
+        "from": "core.loan_documents",
+        "to": "core.loans",
+        "from_column": "loan_id",
+        "to_column": "id",
+        "constraint_name": "loan_documents_loan_id_fkey"
+      },
+      {
+        "from": "core.loan_documents",
+        "to": "core.field_officers",
+        "from_column": "verified_by_field_officer_id",
+        "to_column": "id",
+        "constraint_name": "loan_documents_verified_by_field_officer_id_fkey"
+      },
+      {
+        "from": "core.loan_status_history",
+        "to": "core.field_officers",
+        "from_column": "changed_by_officer_id",
+        "to_column": "id",
+        "constraint_name": "loan_status_history_changed_by_officer_id_fkey"
+      },
+      {
+        "from": "core.loan_status_history",
+        "to": "core.loans",
+        "from_column": "loan_id",
+        "to_column": "id",
+        "constraint_name": "loan_status_history_loan_id_fkey"
+      },
+      {
+        "from": "core.loans",
+        "to": "core.collections",
+        "from_column": "id",
+        "to_column": "loan_id",
+        "constraint_name": "collections_loan_id_fkey"
+      },
+      {
+        "from": "core.loans",
+        "to": "core.loan_documents",
+        "from_column": "id",
+        "to_column": "loan_id",
+        "constraint_name": "loan_documents_loan_id_fkey"
+      },
+      {
+        "from": "core.loans",
+        "to": "core.loan_status_history",
+        "from_column": "id",
+        "to_column": "loan_id",
+        "constraint_name": "loan_status_history_loan_id_fkey"
+      },
+      {
+        "from": "core.loans",
+        "to": "core.borrowers",
+        "from_column": "borrower_id",
+        "to_column": "id",
+        "constraint_name": "loans_borrower_id_fkey"
+      },
+      {
+        "from": "core.loans",
+        "to": "core.branches",
+        "from_column": "branch_id",
+        "to_column": "id",
+        "constraint_name": "loans_branch_id_fkey"
+      },
+      {
+        "from": "core.loans",
+        "to": "core.repayments",
+        "from_column": "id",
+        "to_column": "loan_id",
+        "constraint_name": "repayments_loan_id_fkey"
+      },
+      {
+        "from": "core.repayments",
+        "to": "core.loans",
+        "from_column": "loan_id",
+        "to_column": "id",
+        "constraint_name": "repayments_loan_id_fkey"
+      }
+    ]
+  },
+  "join_paths": {
+    "core.borrowers->core.loans": {
+      "from_table": "core.borrowers",
+      "to_table": "core.loans",
+      "path": [
+        "core.borrowers",
+        "core.loans"
+      ],
+      "edges": [
+        {
+          "from": "core.borrowers",
+          "to": "core.loans",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.borrowers->core.collections": {
+      "from_table": "core.borrowers",
+      "to_table": "core.collections",
+      "path": [
+        "core.borrowers",
+        "core.loans",
+        "core.collections"
+      ],
+      "edges": [
+        {
+          "from": "core.borrowers",
+          "to": "core.loans",
+          "column": "id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.collections",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.borrowers->core.loan_documents": {
+      "from_table": "core.borrowers",
+      "to_table": "core.loan_documents",
+      "path": [
+        "core.borrowers",
+        "core.loans",
+        "core.loan_documents"
+      ],
+      "edges": [
+        {
+          "from": "core.borrowers",
+          "to": "core.loans",
+          "column": "id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.loan_documents",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.borrowers->core.loan_status_history": {
+      "from_table": "core.borrowers",
+      "to_table": "core.loan_status_history",
+      "path": [
+        "core.borrowers",
+        "core.loans",
+        "core.loan_status_history"
+      ],
+      "edges": [
+        {
+          "from": "core.borrowers",
+          "to": "core.loans",
+          "column": "id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.loan_status_history",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.borrowers->core.branches": {
+      "from_table": "core.borrowers",
+      "to_table": "core.branches",
+      "path": [
+        "core.borrowers",
+        "core.loans",
+        "core.branches"
+      ],
+      "edges": [
+        {
+          "from": "core.borrowers",
+          "to": "core.loans",
+          "column": "id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.branches",
+          "column": "branch_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.borrowers->core.repayments": {
+      "from_table": "core.borrowers",
+      "to_table": "core.repayments",
+      "path": [
+        "core.borrowers",
+        "core.loans",
+        "core.repayments"
+      ],
+      "edges": [
+        {
+          "from": "core.borrowers",
+          "to": "core.loans",
+          "column": "id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.repayments",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.borrowers->core.field_officers": {
+      "from_table": "core.borrowers",
+      "to_table": "core.field_officers",
+      "path": [
+        "core.borrowers",
+        "core.loans",
+        "core.collections",
+        "core.field_officers"
+      ],
+      "edges": [
+        {
+          "from": "core.borrowers",
+          "to": "core.loans",
+          "column": "id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.collections",
+          "column": "id"
+        },
+        {
+          "from": "core.collections",
+          "to": "core.field_officers",
+          "column": "field_officer_id"
+        }
+      ],
+      "depth": 3
+    },
+    "core.branches->core.field_officers": {
+      "from_table": "core.branches",
+      "to_table": "core.field_officers",
+      "path": [
+        "core.branches",
+        "core.field_officers"
+      ],
+      "edges": [
+        {
+          "from": "core.branches",
+          "to": "core.field_officers",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.branches->core.loans": {
+      "from_table": "core.branches",
+      "to_table": "core.loans",
+      "path": [
+        "core.branches",
+        "core.loans"
+      ],
+      "edges": [
+        {
+          "from": "core.branches",
+          "to": "core.loans",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.branches->core.collections": {
+      "from_table": "core.branches",
+      "to_table": "core.collections",
+      "path": [
+        "core.branches",
+        "core.field_officers",
+        "core.collections"
+      ],
+      "edges": [
+        {
+          "from": "core.branches",
+          "to": "core.field_officers",
+          "column": "id"
+        },
+        {
+          "from": "core.field_officers",
+          "to": "core.collections",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.branches->core.loan_documents": {
+      "from_table": "core.branches",
+      "to_table": "core.loan_documents",
+      "path": [
+        "core.branches",
+        "core.field_officers",
+        "core.loan_documents"
+      ],
+      "edges": [
+        {
+          "from": "core.branches",
+          "to": "core.field_officers",
+          "column": "id"
+        },
+        {
+          "from": "core.field_officers",
+          "to": "core.loan_documents",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.branches->core.loan_status_history": {
+      "from_table": "core.branches",
+      "to_table": "core.loan_status_history",
+      "path": [
+        "core.branches",
+        "core.field_officers",
+        "core.loan_status_history"
+      ],
+      "edges": [
+        {
+          "from": "core.branches",
+          "to": "core.field_officers",
+          "column": "id"
+        },
+        {
+          "from": "core.field_officers",
+          "to": "core.loan_status_history",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.branches->core.borrowers": {
+      "from_table": "core.branches",
+      "to_table": "core.borrowers",
+      "path": [
+        "core.branches",
+        "core.loans",
+        "core.borrowers"
+      ],
+      "edges": [
+        {
+          "from": "core.branches",
+          "to": "core.loans",
+          "column": "id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.borrowers",
+          "column": "borrower_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.branches->core.repayments": {
+      "from_table": "core.branches",
+      "to_table": "core.repayments",
+      "path": [
+        "core.branches",
+        "core.loans",
+        "core.repayments"
+      ],
+      "edges": [
+        {
+          "from": "core.branches",
+          "to": "core.loans",
+          "column": "id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.repayments",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.collections->core.loans": {
+      "from_table": "core.collections",
+      "to_table": "core.loans",
+      "path": [
+        "core.collections",
+        "core.loans"
+      ],
+      "edges": [
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.collections->core.field_officers": {
+      "from_table": "core.collections",
+      "to_table": "core.field_officers",
+      "path": [
+        "core.collections",
+        "core.field_officers"
+      ],
+      "edges": [
+        {
+          "from": "core.collections",
+          "to": "core.field_officers",
+          "column": "field_officer_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.collections->core.loan_documents": {
+      "from_table": "core.collections",
+      "to_table": "core.loan_documents",
+      "path": [
+        "core.collections",
+        "core.loans",
+        "core.loan_documents"
+      ],
+      "edges": [
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.loan_documents",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.collections->core.loan_status_history": {
+      "from_table": "core.collections",
+      "to_table": "core.loan_status_history",
+      "path": [
+        "core.collections",
+        "core.loans",
+        "core.loan_status_history"
+      ],
+      "edges": [
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.loan_status_history",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.collections->core.borrowers": {
+      "from_table": "core.collections",
+      "to_table": "core.borrowers",
+      "path": [
+        "core.collections",
+        "core.loans",
+        "core.borrowers"
+      ],
+      "edges": [
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.borrowers",
+          "column": "borrower_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.collections->core.branches": {
+      "from_table": "core.collections",
+      "to_table": "core.branches",
+      "path": [
+        "core.collections",
+        "core.loans",
+        "core.branches"
+      ],
+      "edges": [
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.branches",
+          "column": "branch_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.collections->core.repayments": {
+      "from_table": "core.collections",
+      "to_table": "core.repayments",
+      "path": [
+        "core.collections",
+        "core.loans",
+        "core.repayments"
+      ],
+      "edges": [
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.repayments",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.field_officers->core.collections": {
+      "from_table": "core.field_officers",
+      "to_table": "core.collections",
+      "path": [
+        "core.field_officers",
+        "core.collections"
+      ],
+      "edges": [
+        {
+          "from": "core.field_officers",
+          "to": "core.collections",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.field_officers->core.branches": {
+      "from_table": "core.field_officers",
+      "to_table": "core.branches",
+      "path": [
+        "core.field_officers",
+        "core.branches"
+      ],
+      "edges": [
+        {
+          "from": "core.field_officers",
+          "to": "core.branches",
+          "column": "branch_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.field_officers->core.loan_documents": {
+      "from_table": "core.field_officers",
+      "to_table": "core.loan_documents",
+      "path": [
+        "core.field_officers",
+        "core.loan_documents"
+      ],
+      "edges": [
+        {
+          "from": "core.field_officers",
+          "to": "core.loan_documents",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.field_officers->core.loan_status_history": {
+      "from_table": "core.field_officers",
+      "to_table": "core.loan_status_history",
+      "path": [
+        "core.field_officers",
+        "core.loan_status_history"
+      ],
+      "edges": [
+        {
+          "from": "core.field_officers",
+          "to": "core.loan_status_history",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.field_officers->core.loans": {
+      "from_table": "core.field_officers",
+      "to_table": "core.loans",
+      "path": [
+        "core.field_officers",
+        "core.collections",
+        "core.loans"
+      ],
+      "edges": [
+        {
+          "from": "core.field_officers",
+          "to": "core.collections",
+          "column": "id"
+        },
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.field_officers->core.borrowers": {
+      "from_table": "core.field_officers",
+      "to_table": "core.borrowers",
+      "path": [
+        "core.field_officers",
+        "core.collections",
+        "core.loans",
+        "core.borrowers"
+      ],
+      "edges": [
+        {
+          "from": "core.field_officers",
+          "to": "core.collections",
+          "column": "id"
+        },
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.borrowers",
+          "column": "borrower_id"
+        }
+      ],
+      "depth": 3
+    },
+    "core.field_officers->core.repayments": {
+      "from_table": "core.field_officers",
+      "to_table": "core.repayments",
+      "path": [
+        "core.field_officers",
+        "core.collections",
+        "core.loans",
+        "core.repayments"
+      ],
+      "edges": [
+        {
+          "from": "core.field_officers",
+          "to": "core.collections",
+          "column": "id"
+        },
+        {
+          "from": "core.collections",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.repayments",
+          "column": "id"
+        }
+      ],
+      "depth": 3
+    },
+    "core.loan_documents->core.loans": {
+      "from_table": "core.loan_documents",
+      "to_table": "core.loans",
+      "path": [
+        "core.loan_documents",
+        "core.loans"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_documents",
+          "to": "core.loans",
+          "column": "loan_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loan_documents->core.field_officers": {
+      "from_table": "core.loan_documents",
+      "to_table": "core.field_officers",
+      "path": [
+        "core.loan_documents",
+        "core.field_officers"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_documents",
+          "to": "core.field_officers",
+          "column": "verified_by_field_officer_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loan_documents->core.collections": {
+      "from_table": "core.loan_documents",
+      "to_table": "core.collections",
+      "path": [
+        "core.loan_documents",
+        "core.loans",
+        "core.collections"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_documents",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.collections",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_documents->core.loan_status_history": {
+      "from_table": "core.loan_documents",
+      "to_table": "core.loan_status_history",
+      "path": [
+        "core.loan_documents",
+        "core.loans",
+        "core.loan_status_history"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_documents",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.loan_status_history",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_documents->core.borrowers": {
+      "from_table": "core.loan_documents",
+      "to_table": "core.borrowers",
+      "path": [
+        "core.loan_documents",
+        "core.loans",
+        "core.borrowers"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_documents",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.borrowers",
+          "column": "borrower_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_documents->core.branches": {
+      "from_table": "core.loan_documents",
+      "to_table": "core.branches",
+      "path": [
+        "core.loan_documents",
+        "core.loans",
+        "core.branches"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_documents",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.branches",
+          "column": "branch_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_documents->core.repayments": {
+      "from_table": "core.loan_documents",
+      "to_table": "core.repayments",
+      "path": [
+        "core.loan_documents",
+        "core.loans",
+        "core.repayments"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_documents",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.repayments",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_status_history->core.field_officers": {
+      "from_table": "core.loan_status_history",
+      "to_table": "core.field_officers",
+      "path": [
+        "core.loan_status_history",
+        "core.field_officers"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_status_history",
+          "to": "core.field_officers",
+          "column": "changed_by_officer_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loan_status_history->core.loans": {
+      "from_table": "core.loan_status_history",
+      "to_table": "core.loans",
+      "path": [
+        "core.loan_status_history",
+        "core.loans"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_status_history",
+          "to": "core.loans",
+          "column": "loan_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loan_status_history->core.collections": {
+      "from_table": "core.loan_status_history",
+      "to_table": "core.collections",
+      "path": [
+        "core.loan_status_history",
+        "core.field_officers",
+        "core.collections"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_status_history",
+          "to": "core.field_officers",
+          "column": "changed_by_officer_id"
+        },
+        {
+          "from": "core.field_officers",
+          "to": "core.collections",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_status_history->core.branches": {
+      "from_table": "core.loan_status_history",
+      "to_table": "core.branches",
+      "path": [
+        "core.loan_status_history",
+        "core.field_officers",
+        "core.branches"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_status_history",
+          "to": "core.field_officers",
+          "column": "changed_by_officer_id"
+        },
+        {
+          "from": "core.field_officers",
+          "to": "core.branches",
+          "column": "branch_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_status_history->core.loan_documents": {
+      "from_table": "core.loan_status_history",
+      "to_table": "core.loan_documents",
+      "path": [
+        "core.loan_status_history",
+        "core.field_officers",
+        "core.loan_documents"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_status_history",
+          "to": "core.field_officers",
+          "column": "changed_by_officer_id"
+        },
+        {
+          "from": "core.field_officers",
+          "to": "core.loan_documents",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_status_history->core.borrowers": {
+      "from_table": "core.loan_status_history",
+      "to_table": "core.borrowers",
+      "path": [
+        "core.loan_status_history",
+        "core.loans",
+        "core.borrowers"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_status_history",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.borrowers",
+          "column": "borrower_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loan_status_history->core.repayments": {
+      "from_table": "core.loan_status_history",
+      "to_table": "core.repayments",
+      "path": [
+        "core.loan_status_history",
+        "core.loans",
+        "core.repayments"
+      ],
+      "edges": [
+        {
+          "from": "core.loan_status_history",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.repayments",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.loans->core.collections": {
+      "from_table": "core.loans",
+      "to_table": "core.collections",
+      "path": [
+        "core.loans",
+        "core.collections"
+      ],
+      "edges": [
+        {
+          "from": "core.loans",
+          "to": "core.collections",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loans->core.loan_documents": {
+      "from_table": "core.loans",
+      "to_table": "core.loan_documents",
+      "path": [
+        "core.loans",
+        "core.loan_documents"
+      ],
+      "edges": [
+        {
+          "from": "core.loans",
+          "to": "core.loan_documents",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loans->core.loan_status_history": {
+      "from_table": "core.loans",
+      "to_table": "core.loan_status_history",
+      "path": [
+        "core.loans",
+        "core.loan_status_history"
+      ],
+      "edges": [
+        {
+          "from": "core.loans",
+          "to": "core.loan_status_history",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loans->core.borrowers": {
+      "from_table": "core.loans",
+      "to_table": "core.borrowers",
+      "path": [
+        "core.loans",
+        "core.borrowers"
+      ],
+      "edges": [
+        {
+          "from": "core.loans",
+          "to": "core.borrowers",
+          "column": "borrower_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loans->core.branches": {
+      "from_table": "core.loans",
+      "to_table": "core.branches",
+      "path": [
+        "core.loans",
+        "core.branches"
+      ],
+      "edges": [
+        {
+          "from": "core.loans",
+          "to": "core.branches",
+          "column": "branch_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loans->core.repayments": {
+      "from_table": "core.loans",
+      "to_table": "core.repayments",
+      "path": [
+        "core.loans",
+        "core.repayments"
+      ],
+      "edges": [
+        {
+          "from": "core.loans",
+          "to": "core.repayments",
+          "column": "id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.loans->core.field_officers": {
+      "from_table": "core.loans",
+      "to_table": "core.field_officers",
+      "path": [
+        "core.loans",
+        "core.collections",
+        "core.field_officers"
+      ],
+      "edges": [
+        {
+          "from": "core.loans",
+          "to": "core.collections",
+          "column": "id"
+        },
+        {
+          "from": "core.collections",
+          "to": "core.field_officers",
+          "column": "field_officer_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.repayments->core.loans": {
+      "from_table": "core.repayments",
+      "to_table": "core.loans",
+      "path": [
+        "core.repayments",
+        "core.loans"
+      ],
+      "edges": [
+        {
+          "from": "core.repayments",
+          "to": "core.loans",
+          "column": "loan_id"
+        }
+      ],
+      "depth": 1
+    },
+    "core.repayments->core.collections": {
+      "from_table": "core.repayments",
+      "to_table": "core.collections",
+      "path": [
+        "core.repayments",
+        "core.loans",
+        "core.collections"
+      ],
+      "edges": [
+        {
+          "from": "core.repayments",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.collections",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.repayments->core.loan_documents": {
+      "from_table": "core.repayments",
+      "to_table": "core.loan_documents",
+      "path": [
+        "core.repayments",
+        "core.loans",
+        "core.loan_documents"
+      ],
+      "edges": [
+        {
+          "from": "core.repayments",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.loan_documents",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.repayments->core.loan_status_history": {
+      "from_table": "core.repayments",
+      "to_table": "core.loan_status_history",
+      "path": [
+        "core.repayments",
+        "core.loans",
+        "core.loan_status_history"
+      ],
+      "edges": [
+        {
+          "from": "core.repayments",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.loan_status_history",
+          "column": "id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.repayments->core.borrowers": {
+      "from_table": "core.repayments",
+      "to_table": "core.borrowers",
+      "path": [
+        "core.repayments",
+        "core.loans",
+        "core.borrowers"
+      ],
+      "edges": [
+        {
+          "from": "core.repayments",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.borrowers",
+          "column": "borrower_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.repayments->core.branches": {
+      "from_table": "core.repayments",
+      "to_table": "core.branches",
+      "path": [
+        "core.repayments",
+        "core.loans",
+        "core.branches"
+      ],
+      "edges": [
+        {
+          "from": "core.repayments",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.branches",
+          "column": "branch_id"
+        }
+      ],
+      "depth": 2
+    },
+    "core.repayments->core.field_officers": {
+      "from_table": "core.repayments",
+      "to_table": "core.field_officers",
+      "path": [
+        "core.repayments",
+        "core.loans",
+        "core.collections",
+        "core.field_officers"
+      ],
+      "edges": [
+        {
+          "from": "core.repayments",
+          "to": "core.loans",
+          "column": "loan_id"
+        },
+        {
+          "from": "core.loans",
+          "to": "core.collections",
+          "column": "id"
+        },
+        {
+          "from": "core.collections",
+          "to": "core.field_officers",
+          "column": "field_officer_id"
+        }
+      ],
+      "depth": 3
+    }
+  },
+  "fk_edges": [
+    {
+      "from_table": "core.collections",
+      "from_column": "loan_id",
+      "to_table": "core.loans",
+      "to_column": "id",
+      "constraint_name": "collections_loan_id_fkey"
+    },
+    {
+      "from_table": "core.collections",
+      "from_column": "field_officer_id",
+      "to_table": "core.field_officers",
+      "to_column": "id",
+      "constraint_name": "collections_field_officer_id_fkey"
+    },
+    {
+      "from_table": "core.field_officers",
+      "from_column": "branch_id",
+      "to_table": "core.branches",
+      "to_column": "id",
+      "constraint_name": "field_officers_branch_id_fkey"
+    },
+    {
+      "from_table": "core.loan_documents",
+      "from_column": "loan_id",
+      "to_table": "core.loans",
+      "to_column": "id",
+      "constraint_name": "loan_documents_loan_id_fkey"
+    },
+    {
+      "from_table": "core.loan_documents",
+      "from_column": "verified_by_field_officer_id",
+      "to_table": "core.field_officers",
+      "to_column": "id",
+      "constraint_name": "loan_documents_verified_by_field_officer_id_fkey"
+    },
+    {
+      "from_table": "core.loan_status_history",
+      "from_column": "changed_by_officer_id",
+      "to_table": "core.field_officers",
+      "to_column": "id",
+      "constraint_name": "loan_status_history_changed_by_officer_id_fkey"
+    },
+    {
+      "from_table": "core.loan_status_history",
+      "from_column": "loan_id",
+      "to_table": "core.loans",
+      "to_column": "id",
+      "constraint_name": "loan_status_history_loan_id_fkey"
+    },
+    {
+      "from_table": "core.loans",
+      "from_column": "borrower_id",
+      "to_table": "core.borrowers",
+      "to_column": "id",
+      "constraint_name": "loans_borrower_id_fkey"
+    },
+    {
+      "from_table": "core.loans",
+      "from_column": "branch_id",
+      "to_table": "core.branches",
+      "to_column": "id",
+      "constraint_name": "loans_branch_id_fkey"
+    },
+    {
+      "from_table": "core.repayments",
+      "from_column": "loan_id",
+      "to_table": "core.loans",
+      "to_column": "id",
+      "constraint_name": "repayments_loan_id_fkey"
+    }
+  ],
+  "query_policies": {
+    "default_limit": 200,
+    "max_limit": 2000,
+    "max_join_depth": 4,
+    "hard_cap_join_depth": 6,
+    "require_where_for_deep_joins": true,
+    "deep_join_threshold": 5,
+    "blocked_functions": [
+      "pg_sleep",
+      "pg_read_file",
+      "pg_ls_dir",
+      "pg_read_binary_file",
+      "dblink",
+      "dblink_exec",
+      "lo_import",
+      "lo_export",
+      "copy"
+    ],
+    "blocked_patterns": [
+      "DROP",
+      "TRUNCATE",
+      "ALTER",
+      "CREATE",
+      "INSERT",
+      "UPDATE",
+      "DELETE",
+      "GRANT",
+      "REVOKE",
+      "VACUUM",
+      "ANALYZE"
+    ],
+    "require_schema_qualification": true,
+    "allowed_schemas": [
+      "core"
+    ],
+    "statement_timeout_seconds": 30
+  },
+  "compiled_at": "2026-01-08T06:03:10.231959"
+}

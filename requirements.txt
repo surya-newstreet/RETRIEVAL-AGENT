@@ -1,0 +1,48 @@
+# Core API Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+python-multipart==0.0.6
+
+# Database
+asyncpg==0.29.0
+psycopg2-binary==2.9.9
+
+# SQL Parsing & Validation
+sqlglot==20.11.0
+
+# Graph & Data Processing
+networkx==3.2.1
+inflection==0.5.1
+python-dateutil==2.8.2
+
+# LLM Providers
+groq==0.4.1
+openai==1.10.0
+
+# Async & Scheduling
+apscheduler==3.10.4
+aiofiles==23.2.1
+
+# UI
+streamlit==1.30.0
+pandas==2.1.4
+
+# Configuration
+python-dotenv==1.0.0
+
+# Logging & Monitoring
+structlog==24.1.0
+python-json-logger==2.0.7
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0
+httpx==0.26.0
+
+# Development
+black==24.1.1
+ruff==0.1.14
+mypy==1.8.0

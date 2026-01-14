@@ -447,4 +447,3 @@ For issues or questions:
 ---
 
 **Built with**: FastAPI, Streamlit, PostgreSQL, Groq LLM, sqlglot, NetworkX, asyncpg
-# RETRIEVAL-AGENT

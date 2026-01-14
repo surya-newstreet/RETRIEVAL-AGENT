@@ -1,120 +1,185 @@
-# Production-Grade Natural Language to SQL System
+# Natural Language to SQL System
 
-A comprehensive, schema-grounded system that converts natural language questions into safe, validated SQL queries for PostgreSQL databases.
+> **Production-Grade NL to SQL conversion system with schema grounding, defense-in-depth security, and auto-adaptive knowledge base management**
 
-## Overview
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-009688.svg?style=flat&logo=FastAPI)](https://fastapi.tiangolo.com)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-336791.svg?style=flat&logo=postgresql)](https://www.postgresql.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.30.0-FF4B4B.svg?style=flat&logo=streamlit)](https://streamlit.io)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg?style=flat&logo=python)](https://www.python.org)
+[![LLM](https://img.shields.io/badge/LLM-Groq-000000.svg?style=flat)](https://groq.com)
 
-This system is designed with **production-grade** requirements:
-- ✅ **Schema Grounding**: Automatic metadata extraction, no hallucinated tables/columns
-- ✅ **Defense-in-Depth Security**: AST-based validation + read-only execution
-- ✅ **Auto-Adaptive**: KB refreshes hourly + on startup, handles schema changes
-- ✅ **Conversation Context**: Last 3-5 turns with referential question detection
-- ✅ **Clarification Loop**: Single-question clarification for incomplete intents
-- ✅ **Observability**: Structured logging, metrics, health endpoints, correlation IDs
+## 🎯 Overview
 
-## Architecture
+A comprehensive, production-ready system that safely converts natural language questions into validated SQL queries for PostgreSQL databases. Built with enterprise-grade security, observability, and reliability.
 
-### System Components
+**Transform this:**
+```
+"How many users signed up last month?"
+```
+
+**Into this:**
+```sql
+SELECT COUNT(*) 
+FROM core.users 
+WHERE created_at >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month')
+  AND created_at < DATE_TRUNC('month', CURRENT_DATE)
+LIMIT 200
+```
+
+## ✨ Key Features
+
+### 🛡️ Production-Grade Security
+- ✅ **Zero Hallucinations** - Schema grounding prevents AI from inventing tables/columns
+- ✅ **12-Stage Validation** - AST-based SQL parsing with comprehensive safety checks
+- ✅ **Defense-in-Depth** - Read-only execution + statement timeouts + connection isolation
+- ✅ **Blocked Patterns** - Prevents DDL/DML/DCL operations and dangerous functions
+
+### 🧠 Intelligent SQL Generation
+- ✅ **Conversation Context** - Remembers last 5 turns, understands referential questions
+- ✅ **Clarification Loop** - Asks users for clarification on ambiguous queries
+- ✅ **Schema-Grounded Prompts** - LLM receives actual database schema to prevent errors
+- ✅ **Confidence Scoring** - Every SQL query includes confidence and provenance
+
+### 🔄 Auto-Adaptive Knowledge Base
+- ✅ **Hourly Refresh** - Automatically adapts to schema changes
+- ✅ **Atomic Swaps** - Safe KB updates with rollback on failure
+- ✅ **Semantic Enrichment** - Human-curated metadata for better SQL generation
+- ✅ **Join Graph** - Pre-computed FK relationships for validated joins
+
+### 📊 Enterprise Observability
+- ✅ **Structured Logging** - JSON logs with correlation IDs for tracing
+- ✅ **Performance Metrics** - Query times, success rates, clarification rates
+- ✅ **Health Endpoints** - Real-time system status monitoring
+- ✅ **Audit Trail** - Complete record of all queries and validations
+
+## 🏗️ Architecture
 
 ```
-┌─────────────┐
-│   User UI   │ (Streamlit)
-└──────┬──────┘
-       │
-┌──────▼──────────────────────────────────────────┐
-│              FastAPI Application                │
-├─────────────────────────────────────────────────┤
-│  Context     │  LLM SQL      │   SQL           │
-│  Resolver    │  Generator    │   Validator     │
-│              │               │   (AST-based)   │
-├──────────────┴───────────────┴─────────────────┤
-│         Safe Executor (Read-only + Timeout)     │
-└──────────────┬──────────────────────────────────┘
-               │
-    ┌──────────┴──────────┐
-    │                     │
-┌───▼────────┐ ┌─────────▼─────────┐
-│ PostgreSQL │ │   Knowledge Base  │
-│  (core.*)  │ │   (Auto-refresh)  │
-└────────────┘ └───────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│                    User Interface                       │
+│                   (Streamlit UI)                        │
+└────────────────────┬────────────────────────────────────┘
+                     │ HTTP POST
+┌────────────────────▼────────────────────────────────────┐
+│               FastAPI Application                       │
+│  ┌────────────────────────────────────────────────┐    │
+│  │ 1. Context Resolver                            │    │
+│  │    └─ Detect referential questions             │    │
+│  ├────────────────────────────────────────────────┤    │
+│  │ 2. LLM SQL Generator (Groq)                    │    │
+│  │    ├─ Schema-grounded prompting                │    │
+│  │    └─ Detect incomplete intents                │    │
+│  ├────────────────────────────────────────────────┤    │
+│  │ 3. SQL Validator (12 stages)                   │    │
+│  │    ├─ AST parsing (sqlglot)                    │    │
+│  │    ├─ Table/column existence                   │    │
+│  │    ├─ Blocked patterns check                   │    │
+│  │    ├─ Join path validation                     │    │
+│  │    └─ LIMIT enforcement                        │    │
+│  ├────────────────────────────────────────────────┤    │
+│  │ 4. Safe Executor                               │    │
+│  │    ├─ Read-only transaction                    │    │
+│  │    └─ Statement timeout (30s)                  │    │
+│  ├────────────────────────────────────────────────┤    │
+│  │ 5. Observability Layer                         │    │
+│  │    ├─ Structured logging                       │    │
+│  │    └─ Metrics collection                       │    │
+│  └────────────────────────────────────────────────┘    │
+└────────────────────┬────────────────────────────────────┘
+                     │
+        ┌────────────┼────────────┐
+        │            │            │
+┌───────▼───┐ ┌──────▼────┐ ┌────▼──────┐
+│PostgreSQL │ │ Knowledge │ │ Scheduler │
+│ Database  │ │   Base    │ │ (hourly)  │
+└───────────┘ └───────────┘ └───────────┘
 ```
 
 ### Knowledge Base Artifacts
 
-1. **`kb_schema.json`** (AUTO-GENERATED)
-   - Tables, columns, types, PKs, FKs, indexes
-   - Extracted from `information_schema` + `pg_catalog`
+| File | Generated | Purpose |
+|------|-----------|---------|
+| `kb_schema.json` | Auto | Tables, columns, types, PKs, FKs, indexes from `information_schema` |
+| `kb_semantic.json` | Semi-Auto | Business metadata, aliases, PII columns, recommended metrics |
+| `compiled_rules.json` | Runtime | Merged KB + join graph + query policies |
 
-2. **`kb_semantic.json`** (SEMI-AUTOMATIC)
-   - Table purposes, aliases, PII columns
-   - Default filters, recommended metrics/dimensions
-   - Auto-appends new tables with safe defaults
+## 🚀 Quick Start
 
-3. **`compiled_rules.json`** (RUNTIME)
-   - Merged schema + semantic
-   - Join graph with shortest paths
-   - Query policies (limits, timeouts, blocked patterns)
-
-### KB Refresh Lifecycle
-
-- **On Startup**: Full KB generation (blocking)
-- **Hourly Scheduler**: Background refresh
-- **Atomic Swap**: Temp files → validate → swap
-- **Fallback**: Keeps "last known good" on failure
-
-## Quick Start
-
-### 1. Prerequisites
+### Prerequisites
 
 - Python 3.11+
 - PostgreSQL 15+
-- Docker & Docker Compose (optional)
+- Groq API key ([Get one free](https://console.groq.com))
 
-### 2. Environment Configuration
-
-The `.env` file is already configured. Ensure your PostgreSQL database is running:
+### 1. Environment Setup
 
 ```bash
-# Database should already be running at:
-# Host: localhost
-# Port: 5432
-# Database: rag_agent_v2
-# User: postgres
-# Password: kausthub
-```
+# Clone the repository
+git clone https://github.com/surya-newstreet/RETRIEVAL-AGENT.git
+cd RETRIEVAL-AGENT
 
-### 3. Local Development Setup
+# Create .env file
+cat > .env << EOF
+# Database
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_NAME=rag_agent_v2
 
-```bash
+# LLM
+GROQ_API_KEY=your_groq_api_key
+GROQ_MODEL=meta-llama/llama-3-70b-8192
+
+# Query Policies
+DEFAULT_LIMIT=200
+MAX_LIMIT=2000
+STATEMENT_TIMEOUT_SECONDS=30
+
+# KB Refresh
+KB_REFRESH_INTERVAL_HOURS=1
+EOF
+
 # Install dependencies
 pip install -r requirements.txt
+```
 
-# Initialize database with sample schema
-psql -h localhost -U postgres -d rag_agent_v2 -f scripts/init_db.sql
+### 2. Initialize Database
 
-# Start API
+```bash
+# Create database
+createdb rag_agent_v2
+
+# Initialize sample schema
+psql -d rag_agent_v2 -f scripts/init_db.sql
+```
+
+### 3. Start the System
+
+```bash
+# Terminal 1: Start API server
 python -m uvicorn api.main:app --host 0.0.0.0 --port 8000
 
-# In another terminal, start UI
+# Terminal 2: Start UI (in another terminal)
 streamlit run ui/app.py
 ```
 
 ### 4. Access the System
 
-- **Streamlit UI**: http://localhost:8501
-- **API Docs**: http://localhost:8000/docs
-- **Health Check**: http://localhost:8000/api/v1/health
+- **🎨 Streamlit UI**: http://localhost:8501
+- **📚 API Docs**: http://localhost:8000/docs
+- **❤️ Health Check**: http://localhost:8000/api/v1/health
 
-## Usage Examples
+## 💡 Usage Examples
 
-### Example Questions
+### Natural Language Queries
 
-```
+```python
 # Simple queries
 "How many users do we have?"
 "Show me all products"
 
-# Joins
+# Queries with joins
 "List orders with customer names"
 "Show products ordered by john_doe"
 
@@ -122,12 +187,13 @@ streamlit run ui/app.py
 "Total revenue by product category"
 "Average order value per user"
 
-# Time-based
+# Time-based queries
 "Orders placed in the last 30 days"
 "New users this month"
 
-# Clarification triggers
-"Show sales"  → System asks: "Which time period?"
+# Queries that trigger clarification
+"Show sales" → System asks: "Which time period?"
+"Top customers" → System asks: "By what metric?"
 ```
 
 ### API Usage
@@ -135,128 +201,229 @@ streamlit run ui/app.py
 ```python
 import requests
 
-# Query endpoint
+# Execute query
 response = requests.post(
     "http://localhost:8000/api/v1/query",
-    json={"question": "How many users are active?"}
+    json={
+        "question": "How many active users are there?",
+        "session_id": "session_123"  # Optional for context
+    }
 )
 
 result = response.json()
 
+# Handle clarification if needed
 if result.get('needs_clarification'):
-    # Handle clarification
+    print(f"Clarification needed: {result['clarification_question']}")
+    
+    # Provide clarification
     clarify_response = requests.post(
         "http://localhost:8000/api/v1/clarify",
         json={
             "original_question": result['original_question'],
-            "clarification_answer": "last month",
+            "clarification_answer": "last 30 days",
             "partial_intent": result['partial_intent'],
             "session_id": result['session_id']
         }
     )
-else:
-    # Process results
-    print(result['sql'])
-    print(result['rows'])
+    result = clarify_response.json()
+
+# Use results
+print(f"SQL: {result['sql']}")
+print(f"Rows: {result['row_count']}")
+print(f"Execution time: {result['execution_time_ms']}ms")
+print(f"Results: {result['rows']}")
 ```
 
-## Security Features
+## 🔐 Security Features
 
-### Validation (Pre-Execution)
+### 12-Stage Validation Pipeline
 
-- ✅ AST parsing with `sqlglot`
-- ✅ SELECT-only enforcement
-- ✅ Single statement only
-- ✅ Table/column existence checks
-- ✅ Schema qualification verification
-- ✅ Blocked functions: `pg_sleep`, `dblink`, file I/O, etc.
-- ✅ Blocked keywords: INSERT, UPDATE, DELETE, DDL, DCL
-- ✅ Join path validation (must use valid FKs)
-- ✅ Join depth policies (max 4, hard cap 6)
-- ✅ LIMIT enforcement (auto-inject default 200, max 2000)
-- ✅ WHERE required for deep joins (5-6 tables)
+| Stage | Check | Prevents |
+|-------|-------|----------|
+| 1 | AST Parsing | Syntax errors, malformed SQL |
+| 2 | Single Statement | SQL injection via multiple statements |
+| 3 | SELECT-only | Data modification (INSERT/UPDATE/DELETE) |
+| 4 | Blocked Keywords | DDL (DROP/CREATE), DCL (GRANT/REVOKE) |
+| 5 | Table Existence | Querying non-existent tables |
+| 6 | Column Existence | Referencing non-existent columns |
+| 7 | Schema Qualification | Accessing wrong schemas |
+| 8 | Blocked Functions | `pg_sleep`, `dblink`, file I/O functions |
+| 9 | Blocked Join Types | CROSS joins (cartesian products) |
+| 10 | Join Path Validation | Non-FK joins, join explosions |
+| 11 | Join Depth Limits | Overly complex joins (max 4, cap 6) |
+| 12 | LIMIT Enforcement | Unbounded result sets |
 
-### Execution (Defense-in-Depth)
+### Execution Safety (Defense-in-Depth)
 
-> **Why Both?**  
-> *Validation is logic; execution is power.* Defense-in-depth required because validators can have bugs, parser mismatches, or miss expensive-but-valid queries.
+> **Why both validation AND execution controls?**  
+> Validators can have bugs, miss edge cases, or allow expensive-but-valid queries. Multiple safety layers ensure comprehensive protection.
 
-- ✅ Read-only transaction mode: `BEGIN TRANSACTION READ ONLY`
-- ✅ Statement timeout (30s default, kills long queries)
-- ✅ Connection pool limits
-- ✅ Row limit already enforced by validator
-- ✅ Sanitized error messages (no internal leakage)
+- ✅ `BEGIN TRANSACTION READ ONLY` - Database-level write prevention
+- ✅ Statement timeout (30s default) - Kills runaway queries
+- ✅ Connection pool isolation - Separate metadata and query pools
+- ✅ Sanitized errors - No internal details leaked to users
+- ✅ Row limits enforced - Auto-inject LIMIT if missing
 
-## System Policies
+### Blocked Patterns
 
-### Query Policies (Default)
+**Functions:**
+```
+pg_sleep*, pg_read_*, pg_ls_dir, dblink*, lo_*, 
+pg_terminate_backend, pg_cancel_backend
+```
 
-```json
+**Keywords:**
+```
+INSERT, UPDATE, DELETE, DROP, CREATE, ALTER, TRUNCATE,
+GRANT, REVOKE, BEGIN, COMMIT, ROLLBACK
+```
+
+## 📂 Project Structure
+
+```
+.
+├── api/                      # FastAPI application (454 lines)
+│   ├── main.py              # App entry, lifespan management
+│   ├── models.py            # Pydantic request/response models
+│   └── routes.py            # API endpoints
+│
+├── core/                     # Business logic (1,894 lines)
+│   ├── config.py            # Configuration management
+│   ├── context_resolver.py  # Conversation context (5-turn window)
+│   ├── llm_sql_generator.py # NL → SQL with Groq LLM
+│   ├── sql_validator.py     # 12-stage validation pipeline
+│   ├── safe_executor.py     # Read-only execution
+│   ├── schema_introspector.py # DB metadata extraction
+│   ├── join_graph_builder.py  # FK relationship graph
+│   ├── rules_compiler.py    # KB compilation
+│   ├── semantic_store.py    # Semantic metadata
+│   └── result_formatter.py  # Result formatting
+│
+├── validation/               # SQL validation (516 lines)
+│   ├── ast_parser.py        # SQL AST parsing (sqlglot)
+│   ├── blocked_patterns.py  # Security rules
+│   └── join_validator.py    # Join path validation
+│
+├── db/                       # Database layer (128 lines)
+│   └── connection.py        # Connection pool management
+│
+├── llm/                      # LLM integration (150 lines)
+│   ├── base.py              # Abstract LLM interface
+│   └── groq_client.py       # Groq API client
+│
+├── observability/            # Monitoring (268 lines)
+│   ├── logger.py            # Structured logging
+│   └── metrics.py           # Metrics collection
+│
+├── scheduler/                # Background tasks (235 lines)
+│   └── kb_refresh.py        # Hourly KB refresh
+│
+├── ui/                       # Streamlit UI (287 lines)
+│   └── app.py               # Web interface
+│
+├── kb/                       # Knowledge base (auto-generated)
+│   ├── kb_schema.json       # Database schema
+│   ├── kb_semantic.json     # Semantic metadata
+│   └── compiled_rules.json  # Runtime rules
+│
+├── tests/                    # Test suite
+│   ├── unit/                # Unit tests
+│   └── integration/         # Integration tests
+│
+├── scripts/                  # Database scripts
+│   └── init_db.sql          # Sample schema
+│
+├── requirements.txt          # Python dependencies
+├── .env                      # Configuration (gitignored)
+├── docker-compose.yml        # Container orchestration
+├── Dockerfile.api            # API container
+└── Dockerfile.ui             # UI container
+```
+
+**Total:** ~3,600 lines of Python code across 25 modules
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DB_HOST` | localhost | PostgreSQL host |
+| `DB_PORT` | 5432 | PostgreSQL port |
+| `DB_USER` | postgres | Database user |
+| `DB_PASSWORD` | - | Database password (required) |
+| `DB_NAME` | rag_agent_v2 | Database name |
+| `GROQ_API_KEY` | - | Groq API key (required) |
+| `GROQ_MODEL` | meta-llama/llama-3-70b-8192 | LLM model |
+| `DEFAULT_LIMIT` | 200 | Default row limit |
+| `MAX_LIMIT` | 2000 | Maximum row limit |
+| `MAX_JOIN_DEPTH` | 4 | Recommended join depth |
+| `HARD_CAP_JOIN_DEPTH` | 6 | Maximum join depth |
+| `STATEMENT_TIMEOUT_SECONDS` | 30 | Query timeout |
+| `KB_REFRESH_INTERVAL_HOURS` | 1 | KB refresh frequency |
+
+### Query Policies
+
+```python
 {
-  "default_limit": 200,
-  "max_limit": 2000,
-  "max_join_depth": 4,
-  "hard_cap_join_depth": 6,
-  "statement_timeout_seconds": 30,
-  "require_where_for_deep_joins": true,
-  "deep_join_threshold": 5
+  "default_limit": 200,           # Auto-injected if no LIMIT
+  "max_limit": 2000,              # Hard cap
+  "max_join_depth": 4,            # Recommended max
+  "hard_cap_join_depth": 6,       # Absolute max
+  "statement_timeout_seconds": 30, # Query timeout
+  "require_where_for_deep_joins": true,  # 5+ table joins
+  "deep_join_threshold": 5        # When WHERE is required
 }
 ```
 
-### KB Refresh Policy
+## 📊 API Endpoints
 
-- **Interval**: Every 1 hour
-- **On Failure**: Keep last known good KB
-- **Startup**: Blocking initialization (fails if no KB and refresh fails)
+### Query Execution
 
-## Project Structure
+```http
+POST /api/v1/query
+Content-Type: application/json
 
-```
-FINAL PROJECT/
-├── api/                    # FastAPI application
-│   ├── main.py            # App entry + lifespan
-│   ├── routes.py          # Endpoints
-│   └── models.py          # Pydantic models
-├── core/                   # Business logic
-│   ├── config.py          # Settings
-│   ├── schema_introspector.py
-│   ├── join_graph_builder.py
-│   ├── semantic_store.py
-│   ├── rules_compiler.py
-│   ├── context_resolver.py
-│   ├── llm_sql_generator.py
-│   ├── sql_validator.py
-│   ├── safe_executor.py
-│   └── result_formatter.py
-├── db/                     # Database layer
-│   └── connection.py      # Pool management
-├── llm/                    # LLM providers
-│   ├── base.py
-│   └── groq_client.py
-├── validation/             # SQL validation
-│   ├── ast_parser.py
-│   ├── blocked_patterns.py
-│   └── join_validator.py
-├── scheduler/              # Background tasks
-│   └── kb_refresh.py
-├── observability/          # Logging & metrics
-│   ├── logger.py
-│   └── metrics.py
-├── ui/                     # Streamlit frontend
-│   └── app.py
-├── kb/                     # Knowledge base artifacts
-│   ├── kb_schema.json     # (generated)
-│   ├── kb_semantic.json   # (semi-automatic)
-│   └── compiled_rules.json # (generated)
-├── scripts/                # Utilities
-│   └── init_db.sql
-├── tests/                  # Test suite
-├── requirements.txt
-├── .env
-└── README.md
+{
+  "question": "How many users signed up last month?",
+  "session_id": "optional-session-id"
+}
 ```
 
-## Observability
+**Response (Success):**
+```json
+{
+  "sql": "SELECT COUNT(*) FROM core.users WHERE ...",
+  "rows": [{"count": 42}],
+  "row_count": 1,
+  "execution_time_ms": 15.3,
+  "confidence": 0.95,
+  "tables_used": ["core.users"],
+  "correlation_id": "uuid-here",
+  "session_id": "session-id"
+}
+```
+
+**Response (Clarification):**
+```json
+{
+  "needs_clarification": true,
+  "clarification_question": "Which time period would you like to analyze?",
+  "original_question": "Show sales",
+  "partial_intent": {"domain": "sales"},
+  "session_id": "session-id"
+}
+```
+
+### Other Endpoints
+
+- `POST /api/v1/clarify` - Handle clarification responses
+- `GET /api/v1/health` - System health check
+- `GET /api/v1/kb-status` - Knowledge base status
+- `GET /api/v1/metrics` - Performance metrics
+
+## 📈 Observability
 
 ### Structured Logging
 
@@ -270,13 +437,15 @@ All logs output as JSON with correlation IDs:
   "sql": "SELECT COUNT(*) FROM core.users LIMIT 200",
   "execution_time_ms": 15.3,
   "row_count": 1,
-  "timestamp": "2026-01-04T22:45:00.123Z"
+  "timestamp": "2026-01-14T07:35:00.123Z"
 }
 ```
 
 ### Metrics Endpoint
 
-`GET /api/v1/metrics`
+```bash
+curl http://localhost:8000/api/v1/metrics | jq
+```
 
 ```json
 {
@@ -295,88 +464,14 @@ All logs output as JSON with correlation IDs:
     "max_time_ms": 2342.1
   },
   "kb": {
-    "last_refresh": "2026-01-04T21:00:00Z",
-    "version": "2026-01-04T21:00:00.456Z",
+    "last_refresh": "2026-01-14T06:00:00Z",
+    "version": "2026-01-14T06:00:00.456Z",
     "refresh_count": 24
   }
 }
 ```
 
-### Health Endpoint
-
-`GET /api/v1/health`
-
-Returns:
-- DB pool status (metadata + query)
-- KB refresh status
-- Overall system health
-
-## Failure Scenarios & Mitigations
-
-| Scenario | Mitigation |
-|----------|-----------|
-| Schema changes mid-refresh | Temp files + atomic swap, validate before swap |
-| Refresh fails (permissions) | Keep last known good, alert, health shows staleness |
-| LLM timeout/provider down | Configurable timeout, user-friendly error, logging |
-| Validator parsing fails | Catch exceptions, return error with SQL shown |
-| Valid but expensive query | `statement_timeout` kills it, LIMIT cap (2000) |
-| Missing time window | Clarification: "Which time period?" |
-| Join explosion | LIMIT + timeout enforcement |
-| DB pool exhaustion | Pool limits, monitor metrics |
-| UI clarification state desync | Session state in browser, no permanent loss |
-
-## Extending the System
-
-### Add New LLM Provider
-
-1. Create `llm/new_provider.py`:
-```python
-from llm.base import BaseLLMProvider
-
-class NewProvider(BaseLLMProvider):
-    async def generate_completion(self, prompt, **kwargs):
-        # Implementation
-        pass
-```
-
-2. Update configuration to select provider
-
-### Enrich Semantic KB
-
-Edit `kb/kb_semantic.json`:
-
-```json
-{
-  "tables": [
-    {
-      "table_name":  "users",
-      "purpose": "Customer accounts and authentication",
-      "aliases": ["users", "customers", "accounts"],
-      "pii_columns": ["email", "phone"],
-      "recommended_metrics": ["count", "active_count"]
-    }
-  ]
-}
-```
-
-### Add Custom Validation Rules
-
-Edit `validation/blocked_patterns.py` or extend `core/sql_validator.py`
-
-## Testing
-
-```bash
-# Run unit tests
-pytest tests/unit/ -v
-
-# Run integration tests
-pytest tests/integration/ -v
-
-# Run with coverage
-pytest --cov=core --cov=validation tests/
-```
-
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### KB Not Initializing
 
@@ -384,66 +479,158 @@ pytest --cov=core --cov=validation tests/
 # Check database connectivity
 psql -h localhost -U postgres -d rag_agent_v2 -c "SELECT 1"
 
-# Check API logs (the terminal where uvicorn is running)
-# Or check log files if you're logging to file
+# Check API logs for errors
+# Look for "kb_refresh_failed" events
 
-# Manual KB refresh (if needed)
-# You can restart the API server to trigger KB refresh
+# Manual verification
+python -c "from scheduler.kb_refresh import kb_scheduler; import asyncio; asyncio.run(kb_scheduler.startup_kb_init())"
 ```
 
 ### LLM Errors
 
-- Check `GROQ_API_KEY` in `.env`
-- Verify API quota/limits
-- Check model name matches Groq offerings
+- Verify `GROQ_API_KEY` in `.env`
+- Check API quota at https://console.groq.com
+- Ensure model name is correct: `meta-llama/llama-3-70b-8192`
+- Check logs for LLM timeout errors (default 10s)
 
 ### Query Validation Failures
 
-- Check logs for correlation ID
-- Review validation errors in UI
-- Simplify question or add more specificity
+1. Check logs for correlation ID
+2. Review validation error message in UI/API response
+3. Simplify question or add more specificity
+4. Check if question references non-existent tables
 
-## Production Deployment
+### Connection Pool Issues
 
-### Recommendations
+```bash
+# Check pool health
+curl http://localhost:8000/api/v1/health | jq '.db_pools'
 
-1. **Database Roles**: Create separate roles
-   ```sql
-   CREATE ROLE rag_metadata_role WITH LOGIN PASSWORD 'xxx';
-   GRANT SELECT ON information_schema.* TO rag_metadata_role;
-   
-   CREATE ROLE rag_query_role WITH LOGIN PASSWORD 'yyy';
-   GRANT SELECT ON core.* TO rag_query_role;
-   ```
+# Should show:
+# {
+#   "metadata_pool": {"status": "healthy", "active": 1, "idle": 4},
+#   "query_pool": {"status": "healthy", "active": 2, "idle": 18}
+# }
+```
 
-2. **Resource Limits**:
-   - Set appropriate connection pool sizes
-   - Configure `statement_timeout` per workload
-   - Monitor query execution time metrics
+## 🐳 Docker Deployment
 
-3. **Monitoring**:
-   - Ingest JSON logs into ELK/Splunk
-   - Set alerts on KB refresh failures
-   - Monitor success rate and avg execution time
+```bash
+# Start all services
+docker-compose up -d
 
-4. **Security**:
-   - Use secrets manager for API keys
-   - Enable TLS for PostgreSQL connections
-   - Restrict CORS origins in production
-   - Rate limit API endpoints
+# View logs
+docker-compose logs -f api
 
-## License
+# Stop all services
+docker-compose down
+
+# Rebuild after code changes
+docker-compose up -d --build
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+pytest tests/ -v
+
+# Run with coverage
+pytest --cov=core --cov=validation tests/
+
+# Run specific test suite
+pytest tests/integration/ -v
+```
+
+## 🔧 Extending the System
+
+### Add New LLM Provider
+
+```python
+# llm/anthropic_client.py
+from llm.base import BaseLLMProvider
+
+class AnthropicProvider(BaseLLMProvider):
+    async def generate_completion(self, prompt: str, **kwargs):
+        # Implementation
+        pass
+```
+
+### Customize Semantic KB
+
+Edit `kb/kb_semantic.json`:
+
+```json
+{
+  "tables": [
+    {
+      "table_name": "users",
+      "purpose": "Customer accounts and authentication",
+      "aliases": ["users", "customers", "accounts"],
+      "pii_columns": ["email", "phone"],
+      "recommended_metrics": ["count", "active_count"],
+      "recommended_dimensions": ["created_at", "status"]
+    }
+  ]
+}
+```
+
+### Add Custom Validation Rules
+
+Extend `validation/blocked_patterns.py`:
+
+```python
+BLOCKED_FUNCTIONS = [
+    # Existing functions...
+    "your_custom_function",
+]
+```
+
+## 📚 Additional Documentation
+
+- **[00_START_HERE.md](./00_START_HERE.md)** - Comprehensive project overview
+- **[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)** - Detailed architecture documentation
+- **[FILE_INVENTORY.md](./FILE_INVENTORY.md)** - Complete file listing
+- **[QUICK_REFERENCE.md](./QUICK_REFERENCE.md)** - Developer quick reference
+
+## 🤝 Production Deployment
+
+### Pre-Production Checklist
+
+- [ ] Configure strong database credentials
+- [ ] Set up SSL/TLS for PostgreSQL connections
+- [ ] Enable CORS restrictions for production origins
+- [ ] Configure rate limiting on API endpoints
+- [ ] Set up log aggregation (ELK, Splunk, etc.)
+- [ ] Configure monitoring and alerts
+- [ ] Test with production-like workload
+- [ ] Set up database backups
+- [ ] Review and tune query policies
+- [ ] Set up secrets management for API keys
+
+### Recommended Resource Limits
+
+- **API Server**: 2-4 CPU cores, 4-8GB RAM
+- **PostgreSQL**: Dedicated instance, 4+ CPU cores, 8GB+ RAM
+- **Connection Pools**: 
+  - Metadata: 2-5 connections
+  - Query: 5-20 connections (scale with load)
+
+## 📄 License
 
 This is a production-grade system built for internal analytics use.
 
-## Support
+## 🙋 Support
 
 For issues or questions:
 1. Check logs with correlation ID
-2. Review validation errors
-3. Check health endpoint status
-4. Review KB refresh status
+2. Review validation errors in API response
+3. Check health endpoint: `GET /api/v1/health`
+4. Review metrics: `GET /api/v1/metrics`
+5. Consult documentation files
 
 ---
 
-**Built with**: FastAPI, Streamlit, PostgreSQL, Groq LLM, sqlglot, NetworkX, asyncpg
+**Built with**: FastAPI · StreamlIt · PostgreSQL · Groq LLM · sqlglot · NetworkX · asyncpg
+
+**Repository**: [github.com/surya-newstreet/RETRIEVAL-AGENT](https://github.com/surya-newstreet/RETRIEVAL-AGENT)

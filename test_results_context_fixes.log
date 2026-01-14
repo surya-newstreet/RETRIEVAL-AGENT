@@ -1,0 +1,256 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.6.0 -- /home/agirekula/Desktop/ml_env/bin/python
+cachedir: .pytest_cache
+rootdir: /home/agirekula/Videos/FINAL PROJECT
+plugins: cov-4.1.0, anyio-3.7.1, asyncio-0.23.3, langsmith-0.5.0
+asyncio: mode=Mode.STRICT
+collecting ... collected 10 items
+
+test_context_aware.py::test_set_1 
+[93m================================================================================[0m
+[93mTest Set 1: LIMIT Refinement[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 2 branches by total lending[0m
+  Expected: LIMIT 2, aggregation on branches
+  Got SQL: SELECT b.branch_name, COALESCE(SUM(l.principal_amount), 0) AS total_lending FROM core.branches b LEFT JOIN core.loans l ON b.id = l.branch_id GROUP BY...
+
+[91m✗ FAIL[0m Q2
+  Q: [94mmake it 5[0m
+  Expected: Same structure, LIMIT changed to 5
+  [91mNo SQL generated![0m
+  [93mNotes: Should preserve aggregation, only change LIMIT[0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94mmake it 10[0m
+  Expected: Same structure, LIMIT changed to 10
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_2 
+[93m================================================================================[0m
+[93mTest Set 2: ORDER Refinement[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 5 branches by total lending[0m
+  Expected: LIMIT 5, ORDER BY DESC
+  Got SQL: SELECT b.branch_name, COALESCE(SUM(l.principal_amount), 0) AS total_lending FROM core.branches b LEFT JOIN core.loans l ON b.id = l.branch_id GROUP BY...
+
+[91m✗ FAIL[0m Q2
+  Q: [94msort by branch_name asc[0m
+  Expected: ORDER BY branch_name ASC, keep LIMIT 5
+  [91mNo SQL generated![0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94msort by total_lending desc[0m
+  Expected: ORDER BY total_lending DESC, keep LIMIT 5
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_3 
+[93m================================================================================[0m
+[93mTest Set 3: Time Window Refinement[0m
+[93m================================================================================[0m
+
+[91m✗ FAIL[0m Q1
+  Q: [94mShow top 5 branches by total lending in June 2025[0m
+  Expected: Filter for June 2025
+  Got SQL: SELECT b.branch_name, COALESCE(SUM(l.principal_amount), 0) AS total_lending FROM core.branches b LEFT JOIN core.loans l ON b.id = l.branch_id AND EXTR...
+
+[91m✗ FAIL[0m Q2
+  Q: [94mwhat about May 2025?[0m
+  Expected: Same query, filter changed to May 2025
+  [91mNo SQL generated![0m
+  [93mNotes: Should preserve structure, only change month[0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94mwhat about January 2025?[0m
+  Expected: Same query, filter changed to January 2025
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_4 
+[93m================================================================================[0m
+[93mTest Set 4: Metric Change (Keep Subject)[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 5 branches by total lending[0m
+  Expected: Branch aggregation, LIMIT 5
+  Got SQL: SELECT b.branch_name, COALESCE(SUM(l.principal_amount), 0) AS total_lending FROM core.branches b LEFT JOIN core.loans l ON b.id = l.branch_id GROUP BY...
+
+[91m✗ FAIL[0m Q2
+  Q: [94mnow by outstanding balance[0m
+  Expected: Keep branches, change to outstanding_balance
+  [91mNo SQL generated![0m
+  [93mNotes: Should change SUM(principal) to SUM(outstanding_balance)[0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94mmake it 3[0m
+  Expected: Keep metric, change LIMIT to 3
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_5 
+[93m================================================================================[0m
+[93mTest Set 5: Pronoun Resolution ('those branches')[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 3 branches by total lending[0m
+  Expected: Top 3 branches
+  Got SQL: SELECT b.branch_name, COALESCE(SUM(l.principal_amount), 0) AS total_lending FROM core.branches b LEFT JOIN core.loans l ON b.id = l.branch_id GROUP BY...
+
+[91m✗ FAIL[0m Q2
+  Q: [94mfor those branches, show total collections amount_collected[0m
+  Expected: Use CTE/subquery to preserve top 3 branches, sum collections
+  [91mNo SQL generated![0m
+  [93mNotes: CRITICAL: Must preserve exact branch IDs from Q1[0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94mmake it 5[0m
+  Expected: Change LIMIT to 5
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_6 
+[93m================================================================================[0m
+[93mTest Set 6: Drill Down ('show details')[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 2 borrowers by total loan principal[0m
+  Expected: Top 2 borrowers by principal
+  Got SQL: SELECT b.id, b.borrower_code, b.full_name, COALESCE(SUM(l.principal_amount), 0) AS total_principal FROM core.borrowers b LEFT JOIN core.loans l ON b.i...
+
+[91m✗ FAIL[0m Q2
+  Q: [94mshow details[0m
+  Expected: Show borrower details (more columns)
+  [91mNo SQL generated![0m
+  [93mNotes: Should expand columns, keep borrower scope[0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94monly include active loans[0m
+  Expected: Add status filter to active
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_7 
+[93m================================================================================[0m
+[93mTest Set 7: Top Entity Reference[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 5 branches by total lending[0m
+  Expected: Top 5 branches
+  Got SQL: SELECT b.branch_name, COALESCE(SUM(l.principal_amount), 0) AS total_lending FROM core.branches b LEFT JOIN core.loans l ON b.id = l.branch_id GROUP BY...
+
+[91m✗ FAIL[0m Q2
+  Q: [94min that top one, show all loans[0m
+  Expected: Filter loans to #1 branch only
+  [91mNo SQL generated![0m
+  [93mNotes: Should use CTE or subquery for top 1 branch[0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94mmake it 20[0m
+  Expected: Change LIMIT to 20
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_8 
+[93m================================================================================[0m
+[93mTest Set 8: Cross-Table Continuation[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 1 branch by total collections[0m
+  Expected: Top 1 branch by collections
+  Got SQL: SELECT b.branch_name, COALESCE(SUM(c.amount_collected), 0) AS total_collected FROM core.branches b LEFT JOIN core.collections c ON b.id = c.field_offi...
+
+[92m✓ PASS[0m Q2
+  Q: [94min that branch, show top 5 field officers by amount_collected[0m
+  Expected: Officers in that branch, LIMIT 5
+  Got SQL: SELECT fo.id, fo.full_name, COALESCE(SUM(c.amount_collected), 0) AS total_collected FROM core.field_officers fo LEFT JOIN core.collections c ON fo.id ...
+  [93mNotes: Should preserve branch scope[0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94mwhat about last 30 days?[0m
+  Expected: Add time filter for 30 days
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_9 
+[93m================================================================================[0m
+[93mTest Set 9: Borrower Scope Continuation[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 3 borrowers by total repayments amount[0m
+  Expected: Top 3 borrowers by repayments
+  Got SQL: SELECT b.full_name, COALESCE(SUM(r.amount), 0) AS total_repayments FROM core.borrowers b LEFT JOIN core.loans l ON b.id = l.borrower_id LEFT JOIN core...
+
+[91m✗ FAIL[0m Q2
+  Q: [94mfor those borrowers, show their loans with outstanding_balance[0m
+  Expected: Loans for those 3 borrowers
+  [91mNo SQL generated![0m
+  [93mNotes: Should preserve borrower subset with CTE/subquery[0m
+
+[91m✗ FAIL[0m Q3
+  Q: [94msort by outstanding_balance desc[0m
+  Expected: Add ORDER BY outstanding_balance DESC
+  [91mNo SQL generated![0m
+PASSED
+test_context_aware.py::test_set_10 
+[93m================================================================================[0m
+[93mTest Set 10: Unrelated Query (Context Reset)[0m
+[93m================================================================================[0m
+
+[92m✓ PASS[0m Q1
+  Q: [94mShow top 5 branches by total lending[0m
+  Expected: Top 5 branches
+  Got SQL: SELECT b.branch_name, COALESCE(SUM(l.principal_amount), 0) AS total_lending FROM core.branches b LEFT JOIN core.loans l ON b.id = l.branch_id GROUP BY...
+
+[91m✗ FAIL[0m Q2
+  Q: [94mList all borrowers[0m
+  Expected: All borrowers (ignore branch context)
+  [91mNo SQL generated![0m
+  [93mNotes: CRITICAL: Should NOT use context from Q1[0m
+PASSED
+
+=============================== warnings summary ===============================
+test_context_aware.py::test_set_1
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_1 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_2
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_2 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_3
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_3 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_4
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_4 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_5
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_5 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_6
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_6 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_7
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_7 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_8
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_8 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_9
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_9 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+test_context_aware.py::test_set_10
+  /home/agirekula/Desktop/ml_env/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_context_aware.py::test_set_10 returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 10 passed, 10 warnings in 16.71s =======================
